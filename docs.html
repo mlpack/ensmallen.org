@@ -76,13 +76,20 @@ Citations are useful for the continued development and maintenance of the librar
 <br>
 <br>
 
+<a name="top"></a>
+<b>API Documentation for ensmallen</b>
+<br>
+<br>
+<br>
+
 <b>Optimizers</b>
 <ul>
 <li><a href="#part_adadelta">AdaDelta</a></li>
 <li><a href="#part_adagrad">Adagrad</a></li>
+<li><a href="#part_adam">Adam, AdaMax, AMSGrad, Nadam, NadaMax, OptimisticAdam</a></li>
 <li><a href="#part_bigbatchsgd">Big Batch SGD (BB SGD)</a></li>
-<li><a href="#part_cmaes">CMA-ES</a></li>
-<li><a href="#part_cne">CNE</a></li>
+<li><a href="#part_cmaes">Covariance Matrix Adaptation Evolution Strategy (CMA-ES)</a></li>
+<li><a href="#part_cne">Conventional Neural Evolution (CNE)</a></li>
 <li><a href="#part_frankwolfe">Frank-Wolfe (FW)</a></li>
 <li><a href="#part_gradientdescent">Gradient Descent (GD)</a></li>
 <li><a href="#part_iqn">Incremental Quasi-Newton (IQN)</a></li>
@@ -96,8 +103,7 @@ Citations are useful for the continued development and maintenance of the librar
 <li><a href="#part_smorms3">SMORMS3</a></li>
 <li><a href="#part_svrg">Standard stochastic variance reduced gradient (SVRG)</a></li>
 <li><a href="#part_spalerasgd">SPALeRA Stochastic Gradient Descent (SPALeRASGD)</a></li>
-
-
+<li><a href="#part_sgd">Stochastic Gradient Descent (SGD)</a></li>
 <a name=""></a>
 
 </ul>
@@ -278,8 +284,6 @@ Adagrad is an optimizer with parameter-specific learning rates, which are adapte
 </ul>
 <ul>
 
-
-<li>For convenience the optimizer Attributes can be modified through setters and getters which share names with their respective data members.</li>
 <br>
 <li>Examples:</li>
 <ul>
@@ -303,6 +307,216 @@ See also:
 <br>
 </ul>
 
+<!-- Adam CONTENT -->
+<a name="part_adam"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Adam</b></font>
+<br>
+<br>
+Adam is an optimizer that computes individual adaptive learning rates for different parameters from estimates of first and second moments of the gradients. AdaMax is a variant of Adam based on the infinity norm as given in the section 7 of the following paper. Nadam is an optimizer that combines the Adam and NAG. NadaMax is an variant of Nadam based on infinity form.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>Adam(<i>stepSize, batchSize, beta1, beta2, eps, maxIterations, tolerance, shuffle</i>)</li>
+  <li>Adam(<i>stepSize, batchSize, maxIterations, tolerance, shuffle</i>)</li>
+  <li>Adam(<i>stepSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Initial batch size.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>beta1</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Exponential decay rate for the first moment estimates.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>beta2</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Exponential decay rate for the weighted infinity norm estimates.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>eps</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Value used to initialise the mean squared gradient parameter.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the batch order is shuffled; otherwise, each batch is visited in linear order.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+
+<li>For convenience the following typedefs have been defined:</li>
+
+<ul>
+<table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>Adam</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>AdamType&lt;AdamUpdate&gt;</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>AdaMax</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>AdamType&lt;AdaMaxUpdate&gt;</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>AMSGrad</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>AdamType&lt;AMSGradUpdate&gt;</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>Nadam</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>AdamType&lt;NadamUpdate&gt;</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>NadaMax</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>AdamType&lt;NadaMaxUpdate&gt;</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>OptimisticAdam</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>AdamType&lt;OptimisticAdamUpdate&gt;</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+Adam optimizer(1e-3, 1, 0.9, 0.999, 1e-8, 500000, 1e-9, true);  // Standard Adam.
+optimizer.Optimize(f, coordinates);
+
+AdaMax adaMaxOptimizer(2e-3, 1, 0.9, 0.999, 1e-8, 500000, 1e-9, true); // AdaMax.
+adaMaxOptimizer.Optimize(f, coordinates);
+
+AMSGrad amsGradOptimizer(1e-3, 1, 0.9, 0.999, 1e-8, 500000, 1e-11, true);  // AMSGrad.
+amsGradOptimizer.Optimize(f, coordinates);
+
+Nadam nadamOptimizer(1e-3, 1, 0.9, 0.99, 1e-8, 500000, 1e-9, true); // Nadam.
+nadamOptimizer.Optimize(f, coordinates);
+
+OptimisticAdam optimisticAdamOptimizer(1e-2, 1, 0.9, 0.99, 1e-8); // OptimisticAdam.
+optimisticAdamOptimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://arxiv.org/abs/1412.6980">Adam: A Method for Stochastic Optimization</a></li>
+<li><a href="https://openreview.net/forum?id=ryQu7f-RZ">On the Convergence of Adam and Beyond</a></li>
+<li><a href="https://openreview.net/forum?id=OM0jvwB8jIp57ZJjtNEZ">Incorporating Nesterov momentum into Adam</a></li>
+<li><a href="https://arxiv.org/abs/1711.00141">Training GANs with Optimism</a></li>
+
+</ul>
+</li>
+<br>
+</ul>
 
 <!-- Big Batch SGD CONTENT -->
 <a name="part_bigbatchsgd"></a>
@@ -438,7 +652,7 @@ See also:
 <ul>
 <li><a href="https://arxiv.org/pdf/1610.05792.pdf">Big Batch SGD: Automated Inference using Adaptive Batch Sizes</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">SGD in Wikipedia</a></li>
-<li><a href="#SGD">SGD</a></li>
+<li><a href="#part_sgd">SGD</a></li>
 </ul>
 </li>
 <br>
@@ -963,7 +1177,7 @@ See also:
 <font size=+1><b>Katyusha</b></font>
 <br>
 <br>
-Katyusha is a direct, primal-only stochastic gradient method which uses a "negative momentum" on top of Nesterovâ€™s momentum.
+Katyusha is a direct, primal-only stochastic gradient method which uses a "negative momentum" on top of Nesterov’s momentum.
 <a name="Attributes"></a>
 
 <br>
@@ -1100,7 +1314,7 @@ See also:
 <font size=+1><b>L-BFGS</b></font>
 <br>
 <br>
-L-BFGS is an optimization algorithm in the family of quasi-Newton methods that approximates the Broydenâ€“Fletcherâ€“Goldfarbâ€“Shanno (BFGS) algorithm using a limited amount of computer memory.
+L-BFGS is an optimization algorithm in the family of quasi-Newton methods that approximates the Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm using a limited amount of computer memory.
 <a name="Attributes"></a>
 
 <br>
@@ -2139,7 +2353,7 @@ bbOptimizer.Optimize(f, coordinates);
 See also:
 <ul>
 <li><a href="https://papers.nips.cc/paper/4937-accelerating-stochastic-gradient-descent-using-predictive-variance-reduction.pdf">Accelerating Stochastic Gradient Descent using Predictive Variance Reduction</a></li>
-<li><a href="#SGD">SGD</a></li>
+<li><a href="#part_sgd">SGD</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">SGD in Wikipedia</a></li>
 </ul>
 </li>
@@ -2390,7 +2604,282 @@ optimizer.Optimize(f, coordinates);
 See also:
 <ul>
 <li><a href="https://arxiv.org/abs/1709.01427">Stochastic Gradient Descent: Going As Fast As Possible But Not Faster</a></li>
-<li><a href="#SGD">SGD</a></li>
+<li><a href="#part_sgd">SGD</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">SGD in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- SGD CONTENT -->
+<a name="part_sgd"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Stochastic Gradient Descent (SGD)</b></font>
+<br>
+<br>
+Stochastic Gradient Descent is a technique for minimizing a function which can be expressed as a sum of other functions.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>SGD(<i>stepSize, batchSize, maxIterations, tolerance, shuffle, updatePolicy, decayPolicy, resetPolicy</i>)</li>
+  <li>SGD(<i>stepSize, batchSize, maxIterations, tolerance, shuffle</i>)</li>
+  <li>SGD(<i>stepSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Initial batch size.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the batch order is shuffled; otherwise, each batch is visited in linear order.</td>
+</tr>
+
+<tr>
+<td><code>UpdatePolicyType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>updatePolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Instantiated update policy used to adjust the given parameters.</td>
+</tr>
+
+<tr>
+<td><code>DecayPolicyType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>decayPolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Instantiated decay policy used to adjust the step size.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>resetPolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Flag that determines whether update policy parameters are reset before every Optimize call.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+
+<li>For convenience the following typedefs have been defined:</li>
+
+<ul>
+<table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>StandardSGD</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>SGD&lt;VanillaUpdate&gt;</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>MomentumSGD</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>SGD&lt;MomentumUpdate&gt;</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>NesterovMomentumSGD</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>SGD&lt;NesterovMomentumUpdate&gt;</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+StandardSGD optimizer(0.001, 1, 0, 1e-15, true);  // Standard SGD (vanilla update).
+optimizer.Optimize(f, coordinates);
+
+MomentumSGD momentumoOtimizer(0.0003, 1, 2500000, 1e-9, true, MomentumUpdate(0.7));  // Momentum SGD (momentum update).
+MomentumUpdate.Optimize(f, coordinates);
+
+MomentumSGD momentumoOtimizer(0.0003, 1, 2500000, 1e-9, true, MomentumUpdate(0.7));  // Momentum SGD (momentum update).
+momentumoOtimizer.Optimize(f, coordinates);
+
+NesterovMomentumSGD nesterovOptimizer(0.0001, 1, 0, 1e-15, true, NesterovMomentumUpdate(0.9));  // Nesterov Momentum SGD (nesterov update).
+nesterovOptimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">SGD in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- SCD CONTENT -->
+<a name="part_scd"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Stochastic Coordinate descent (SCD).</b></font>
+<br>
+<br>
+Stochastic Coordinate descent is a technique for minimizing a function by doing a line search along a single direction at the current point in the iteration. The direction (or "coordinate") can be chosen cyclically, randomly or in a greedy fashion(depending on the DescentPolicy).
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>SCD(<i>stepSize, maxIterations, tolerance, updateInterval, descentPolicy</i>)</li>
+  <li>SCD(<i>stepSize, maxIterations, tolerance, updateInterval</i>)</li>
+  <li>SCD(<i>stepSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>updateInterval</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+The interval at which the objective is to be reported and checked for convergence.</td>
+</tr>
+
+<tr>
+<td><code>DescentPolicyType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>descentPolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Memory parameter of the Agnostic Learning Rate adaptation.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>epsilon</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>he policy to use for picking up the coordinate to descend on.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+SCD<> optimizer(0.4);
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://dl.acm.org/citation.cfm?doid=1553374.1553493">Stochastic methods for l1 regularized loss minimization</a></li>
+<li><a href="#part_sgd">SGD</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">SGD in Wikipedia</a></li>
 </ul>
 </li>
