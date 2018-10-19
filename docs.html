@@ -1,0 +1,2464 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html;" http-equiv="Content-Type">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="ensmallen_icon.png" type="image/png">
+  <link type="text/css" rel="stylesheet" href="style.css"> 
+  <title>ensmallen: flexible C++ library for efficient mathematical optimization</title>
+</head>
+<body>
+
+<div id="ens_header">
+<div id="ens_header_row">
+  <div id="ens_header_cell_logo_img"><a href="http://ensmallen.org"><img id="ens_logo_img" src="ensmallen_logo.png" alt="ensmallen" align="top" border="0"></a></div>
+  <div id="ens_header_spacer"></div>
+  <div id="ens_header_cell_logo_txt"><big><big><b>en</b>small<b>en</b></big><br>flexible C++ library for efficient mathematical optimization</big></div>
+</div>
+</div>
+
+
+
+<div id="ens_menu">
+  <ul class="ens_menu">
+  <li class="ens_menu"><a class="ens_menu" href="index.html">Home</a></li>
+  <li class="ens_menu"><a class="ens_menu_selected" href="docs.html">Documentation</a></li>
+  <li class="ens_menu"><a class="ens_menu" href="developers.html">Developers</a></li>
+  <li class="ens_menu"><a class="ens_menu" href="questions.html">Questions</a></li>
+  </ul>
+</div>
+
+<div id="ens_content">
+
+
+<!-- BEGIN CONTENT -->
+
+
+<style type="text/css">
+<!--
+@media all
+  {
+  .pagebreak { }
+  .noprint   { }
+  }
+
+@media print
+  {
+  .pagebreak { page-break-before: always; }
+  .noprint   { display: none !important;  }
+  }
+-->
+</style>
+
+<a class="noprint" style="display:scroll; position:fixed; bottom:5px; right:5px;" href="#top"><font size=-1>[top]</font></a>
+
+<a name="top"></a>
+<big><b>API documentation for ensmallen 1.10</b></big>
+<br>
+<br>
+
+
+<!-- uncomment the block below once we have a publication -->
+<!--
+<b>Citations</b>
+<ul>
+<li>
+Please cite the following paper if you use ensmallen in your research and/or software.
+<br>
+Citations are useful for the continued development and maintenance of the library.
+<br>
+<br>
+[under construction]
+</li>
+</ul>
+-->
+
+<br>
+<br>
+
+<b>Optimizers</b>
+<ul>
+<li><a href="#part_adadelta">AdaDelta</a></li>
+<li><a href="#part_adagrad">Adagrad</a></li>
+<li><a href="#part_bigbatchsgd">Big Batch SGD (BB SGD)</a></li>
+<li><a href="#part_cmaes">CMA-ES</a></li>
+<li><a href="#part_cne">CNE</a></li>
+<li><a href="#part_frankwolfe">Frank-Wolfe (FW)</a></li>
+<li><a href="#part_gradientdescent">Gradient Descent (GD)</a></li>
+<li><a href="#part_iqn">Incremental Quasi-Newton (IQN)</a></li>
+<li><a href="#part_katyusha">Katyusha</a></li>
+<li><a href="#part_lbfgs">Limited-memory BFGS (L-BFGS)</a></li>
+<li><a href="#part_rmsprop">RMSProp</a></li>
+<li><a href="#part_simulatedannealing">Simulated Annealing (SA)</a></li>
+<li><a href="#part_sarah">SARAH/SARAH+</a></li>
+<li><a href="#part_sgdr">Stochastic Gradient Descent with Restarts (SGDR)</a></li>
+<li><a href="#part_snapshotsgdr">Snapshot Stochastic Gradient Descent with Restarts (SnapshotSGDR)</a></li>
+<li><a href="#part_smorms3">SMORMS3</a></li>
+<li><a href="#part_svrg">Standard stochastic variance reduced gradient (SVRG)</a></li>
+<li><a href="#part_spalerasgd">SPALeRA Stochastic Gradient Descent (SPALeRASGD)</a></li>
+
+
+<a name=""></a>
+
+</ul>
+
+<!-- AdaDelta CONTENT -->
+<a name="part_adadelta"></a>
+<hr class="greyline">
+<br>
+<br>
+<a name="part_adadelta"></a>
+<font size=+1><b>AdaDelta</b></font>
+<br>
+<br>
+Adadelta is an extension of Adagrad that adapts learning rates based on a moving window of gradient updates, instead of accumulating all past gradients. Instead of accumulating all past squared gradients, the sum of gradients is recursively defined as a decaying average of all past squared gradients.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>AdaDelta(<i>stepSize, batchSize, rho, epsilon, maxIterations, tolerance, shuffle</i>)</li>
+  <li>AdaDelta(<i>stepSize, batchSize</i>)</li>
+  <li>AdaDelta(<i>stepSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Number of points to process in one step.</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>rho</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Smoothing constant. Corresponding to fraction of gradient to keep at each time step.</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>epsilon</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Value used to initialise the mean squared gradient parameter.</td>
+</tr>
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the function order is shuffled; otherwise, each function is visited in linear order.</td>
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+AdaDelta optimizer(1.0, 1, 0.99, 1e-8, 1000, 1e-9, true);
+
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://arxiv.org/abs/1212.5701">Adadelta - an adaptive learning rate method</a></li>
+<li><a href="#Adagrad">Adagrad</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- AdaGrad CONTENT -->
+<a name="part_adagrad"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Adagrad</b></font>
+<br>
+<br>
+Adagrad is an optimizer with parameter-specific learning rates, which are adapted relative to how frequently a parameter gets updated during training. Larger updates for more sparse parameters and smaller updates for less sparse parameters.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>Adagrad(<i>stepSize, batchSize, epsilon, maxIterations, tolerance, shuffle</i>)</li>
+  <li>Adagrad(<i>stepSize, batchSize</i>)</li>
+  <li>Adagrad(<i>stepSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b>(double)</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Number of points to process in one step.</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>epsilon</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Value used to initialise the mean squared gradient parameter.</td>
+</tr>
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the function order is shuffled; otherwise, each function is visited in linear order.</td>
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+
+<li>For convenience the optimizer Attributes can be modified through setters and getters which share names with their respective data members.</li>
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+AdaGrad optimizer(1.0, 1, 1e-8, 1000, 1e-9, true);
+
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="http://www.jmlr.org/papers/volume12/duchi11a/duchi11a.pdf">Adaptive Subgradient Methods for Online Learning and Stochastic Optimization</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent#AdaGrad">AdaGrad in Wikipedia</a></li>
+<li><a href="#Adagrad">AdaDelta</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+
+<!-- Big Batch SGD CONTENT -->
+<a name="part_bigbatchsgd"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Big Batch SGD</b></font>
+<br>
+<br>
+Big Batch SGD adaptively grows the batch size over time to maintain a nearly constant signal-to-noise ratio in the gradient approximation, so the Big Batch SGD optimizer is able to adaptively adjust batch sizes without user oversight.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>BigBatchSGD(<i>stepSize, batchSize, epsilon, maxIterations, tolerance, shuffle</i>)</li>
+  <li>BigBatchSGD(<i>stepSize, batchSize</i>)</li>
+  <li>BigBatchSGD(<i>stepSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Initial batch size.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchDelta</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Factor for the batch update step.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the batch order is shuffled; otherwise, each batch is visited in linear order.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+
+<li>For convenience the following typedefs have been defined:</li>
+
+<ul>
+<table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>BBS_Armijo</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>BigBatchSGD&lt;BacktrackingLineSearch&gt;</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>BBS_BB</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>BigBatchSGD&lt;AdaptiveStepsize&gt;</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+BBS_BB bbsgd(batchSize, 0.01, 0.1, 8000, 1e-4); // Big-Batch SGD with the adaptive stepsize policy.
+optimizer.Optimize(f, coordinates);
+
+BBS_Armijo bbsgd(batchSize, 0.01, 0.1, 8000, 1e-4); // Big-Batch SGD with backtracking line search.
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://arxiv.org/pdf/1610.05792.pdf">Big Batch SGD: Automated Inference using Adaptive Batch Sizes</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">SGD in Wikipedia</a></li>
+<li><a href="#SGD">SGD</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- CMAES CONTENT -->
+<a name="part_cmaes"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>CMAES</b></font>
+<br>
+<br>
+CMA-ES - Covariance Matrix Adaptation Evolution Strategy is s a stochastic search algorithm. CMA-ES is a second order approach estimating a positive definite matrix within an iterative procedure using the covariance matrix.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>CMAES(<i>lambda, lowerBound, upperBound, batchSize, maxIterations, tolerance, selectionPolicy</i>)</li>
+  <li>CMAES(<i>lambda, lowerBound, upperBound, batchSize</i>)</li>
+  <li>CMAES(<i>lambda, lowerBound, upperBound</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>lambda</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The population size (0 use the default size).</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>lowerBound</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Lower bound of decision variables.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>upperBound</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Upper bound of decision variables.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Batch size to use for the objective calculation.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>SelectionPolicyType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>selectionPolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Instantiated selection policy used to calculate the objective (default FullSelection).</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<li>For convenience the following typedefs have been defined:</li>
+
+<ul>
+<table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>ApproxCMAES</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>CMAES&lt;RandomSelection&gt;</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+CMAES<> optimizer(0, -1, 1, 32, 200, 0.1e-4); // CMAES with the FullSelection policy.
+optimizer.Optimize(f, coordinates);
+
+ApproxCMAES<>  approxOptimizer(batchSize, 0.01, 0.1, 8000, 1e-4); // CMAES with the RandomSelection policy.
+approxOptimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="http://www.cmap.polytechnique.fr/~nikolaus.hansen/cmaartic.pdf">Completely Derandomized Self-Adaptation in Evolution Strategies</a></li>
+<li><a href="https://en.wikipedia.org/wiki/CMA-ES">CMA-ES in Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Evolution_strategy">Evolution strategy in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- CNE CONTENT -->
+<a name="part_cne"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>CNE</b></font>
+<br>
+<br>
+Conventional Neural Evolution is an optimizer that works like biological evolution which selects best candidates based on their fitness scores and creates new generation by mutation and crossover of population.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>CNE(<i>populationSize, maxGenerations, mutationProb, mutationSize, selectPercent, tolerance, objectiveChange</i>)</li>
+  <li>CNE(<i>populationSize, maxGenerations, mutationProb, mutationSize</i>)</li>
+  <li>CNE(<i>populationSize, maxGenerations</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>populationSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The number of candidates in the population. This should be at least 4 in size.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxGenerations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The maximum number of generations allowed for CNE.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>mutationProb</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Probability that a weight will get mutated.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>mutationSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The range of mutation noise to be added. This range is between 0 and mutationSize.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>selectPercent</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The percentage of candidates to select to become the the next generation.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The final value of the objective function for termination. If set to negative value, tolerance is not considered.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>objectiveChange</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Minimum change in best fitness values between two consecutive generations should be greater than threshold. If set to negative value, objectiveChange is not considered.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+CNE optimizer(200, 10000, 0.2, 0.2, 0.3, 65, 0.1e-4);
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="http://www.cmap.polytechnique.fr/~nikolaus.hansen/cmatutorial110628.pdf">The CMA Evolution Strategy: A Tutorial</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Neuroevolution">Neuroevolution in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- Frank-Wolfe Algorithm CONTENT -->
+<a name="part_frankwolfe"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Frank-Wolfe</b></font>
+<br>
+<br>
+Frank-Wolfe is a technique to minimize a continuously differentiable convex function f over a compact convex subset D of a vector space. It is also known as conditional gradient method.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>FrankWolfe(<i>linearConstrSolver, updateRule, maxIterations, tolerance</i>)</li>
+  <li>FrankWolfe(<i>linearConstrSolver, updateRule</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>LinearConstrSolverType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>linearConstrSolver</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Solver for linear constrained problem.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>UpdateRuleType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>updateRule</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Rule for updating solution in each iteration.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<li>For convenience the following typedefs have been defined:</li>
+
+<ul>
+<table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>OMP</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>FrankWolfe&lt;ConstrLpBallSolver, UpdateSpan>&gt;</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://pdfs.semanticscholar.org/3a24/54478a94f1e66a3fc5d209e69217087acbc0.pdf">An algorithm for quadratic programming</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Frank%E2%80%93Wolfe_algorithm">Frank-Wolfe in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- Gradient Descent CONTENT -->
+<a name="part_gradientdescent"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Gradient Descent</b></font>
+<br>
+<br>
+Gradient Descent is a technique to minimize a function. To find a local minimum of a function using gradient descent, one takes steps proportional to the negative of the gradient of the function at the current point.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>GradientDescent(<i>stepSize, maxIterations, tolerance</i>)</li>
+  <li>GradientDescent(<i>stepSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>StepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+GradientDescent optimizer(0.001, 0, 1e-15);
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient descent in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+
+<!-- IQN CONTENT -->
+<a name="part_iqn"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>IQN</b></font>
+<br>
+<br>
+The Incremental Quasi-Newton belongs to the family of stochastic and incremental methods that have a cost per iteration independent of n. IQN iterations are a stochastic version of BFGS iterations that use memory to reduce the variance of stochastic approximations.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>IQN(<i>stepSize, batchSize, maxIterations, tolerance</i>)</li>
+  <li>IQN(<i>stepSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>StepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Size of each batch.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+IQN optimizer(0.01, 1, 5000, 1e-5);
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://arxiv.org/abs/1702.00709">IQN: An Incremental Quasi-Newton Method with Local Superlinear Convergence Rate</a></li>
+<li><a href="https://arxiv.org/abs/1401.7020">A Stochastic Quasi-Newton Method for Large-Scale Optimization</a></li>
+
+</ul>
+</li>
+<br>
+</ul>
+
+
+<!-- Katyusha CONTENT -->
+<a name="part_katyusha"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Katyusha</b></font>
+<br>
+<br>
+Katyusha is a direct, primal-only stochastic gradient method which uses a "negative momentum" on top of Nesterovâ€™s momentum.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>Katyusha(<i>convexity, lipschitz, batchSize, maxIterations, innerIterations, tolerance, shuffle</i>)</li>
+  <li>Katyusha(<i>convexity, lipschitz, batchSize</i>)</li>
+  <li>Katyusha(<i>convexity, lipschitz</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>convexity</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The population size (0 use the default size).</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>lipschitz</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The regularization parameter.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The Lipschitz constant.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>innerIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The number of inner iterations allowed (0 means n / batchSize). Note that the full gradient is only calculated in the outer iteration.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the function order is shuffled; otherwise, each function is visited in linear order.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+
+<li>For convenience the following typedefs have been defined:</li>
+
+<ul>
+<table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>KatyushaProximal</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>KatyushaType&lt;true&gt;</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+Katyusha optimizer(1.0, 10.0, 1, 100, 0, 1e-10, true); // Without proximal update.
+optimizer.Optimize(f, coordinates);
+
+KatyushaProximal proximalOptimizer(1.0, 10.0, 1, 100, 0, 1e-10, true);  // With proximal update.
+proximalOptimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://arxiv.org/abs/1603.05953">Katyusha: The First Direct Acceleration of Stochastic Gradient Methods</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">Stochastic gradient descent in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+
+<!-- L_BFGS CONTENT -->
+<a name="part_lbfgs"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>L-BFGS</b></font>
+<br>
+<br>
+L-BFGS is an optimization algorithm in the family of quasi-Newton methods that approximates the Broydenâ€“Fletcherâ€“Goldfarbâ€“Shanno (BFGS) algorithm using a limited amount of computer memory.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>L_BFGS(<i>numBasis, maxIterations, armijoConstant, wolfe, minGradientNorm, factr, maxLineSearchTrials, minStep, maxStep</i>)</li>
+  <li>L_BFGS(<i>numBasis, maxIterations, armijoConstant, wolfe, minGradientNorm, factr, maxLineSearchTrials</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>numBasis</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Number of memory points to be stored (default 5).</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations for the optimization (0 means no limit and may run indefinitely).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>armijoConstant</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Controls the accuracy of the line search routine for determining the Armijo condition.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>wolfe</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Parameter for detecting the Wolfe condition.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>minGradientNorm</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Minimum gradient norm required to continue the optimization.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>factr</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Minimum relative function value decrease to continue the optimization.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxLineSearchTrials</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The maximum number of trials for the line search (before giving up).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>minStep</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The minimum step of the line search.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxStep</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The maximum step of the line search.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+L_BFGS optimizer(20);
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://onlinelibrary.wiley.com/doi/full/10.1002/nme.1620141104">The solution of non linear finite element equations</a></li>
+<li><a href="https://www.jstor.org/stable/2006193">Updating Quasi-Newton Matrices with Limited Storage</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Limited-memory_BFGS">Limited-memory BFGS in Wikipedia</a></li>
+
+</ul>
+</li>
+<br>
+</ul>
+
+
+<!-- RMSProp CONTENT -->
+<a name="part_rmsprop"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>RMSProp</b></font>
+<br>
+<br>
+RMSProp utilizes the magnitude of recent gradients to normalize the gradients.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>RMSProp(<i>stepSize, batchSize, alpha, epsilon, maxIterations, tolerance, shuffle</i>)</li>
+  <li>RMSProp(<i>stepSize, batchSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Number of points to process in each step.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>alpha</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Smoothing constant, similar to that used in AdaDelta and momentum methods.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>epsilon</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Value used to initialise the mean squared gradient parameter.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the function order is shuffled; otherwise, each function is visited in linear order.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+RMSProp optimizer(1e-3, 1, 0.99, 1e-8, 5000000, 1e-9, true);
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf">Divide the gradient by a running average of its recent magnitude</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent#RMSProp">Stochastic gradient descent in Wikipedia</a></li>
+
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- Simulated Annealing (SA) CONTENT -->
+<a name="part_simulatedannealing"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Simulated Annealing (SA)</b></font>
+<br>
+<br>
+Simulated Annealing is an stochastic optimization algorithm which is able to deliver near-optimal results quickly without knowing the gradient of the function being optimized. It has unique hill climbing capability that makes it less vulnerable to local minima.  This implementation uses exponential cooling schedule and feedback move control by default, but the cooling schedule can be changed via a template parameter.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>SA(<i>coolingSchedule, maxIterations, initT, initMoves, moveCtrlSweep, tolerance, maxToleranceSweep, maxMoveCoef, initMoveCoef, gain</i>)</li>
+  <li>SA(<i>coolingSchedule, maxIterations</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>CoolingScheduleType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>coolingSchedule</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Instantiated cooling schedule (default ExponentialSchedule).</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>maxIterations Maximum number of iterations allowed (0 indicates no limit).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>initT</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Initial temperature.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>initMoves</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Number of initial iterations without changing temperature.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>moveCtrlSweep</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Sweeps per feedback move control.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code>
+</td><td>&nbsp;&nbsp;&nbsp;</td>
+<td>Tolerance to consider system frozen.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxToleranceSweep</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum sweeps below tolerance to consider system frozen.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxMoveCoef</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum move size.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>initMoveCoef</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Initial move size.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>gain</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Proportional control in feedback move control.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+SA<ExponentialSchedule> optimizer(ExponentialSchedule(), 1000000, 1000., 1000, 100, 1e-10, 3, 1.5, 0.5, 0.3
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf">Divide the gradient by a running average of its recent magnitude</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent#RMSProp">Stochastic gradient descent in Wikipedia</a></li>
+
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- SARAH CONTENT -->
+<a name="part_sarah"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>StochAstic Recusive gRadient algoritHm (SARAH/SARAH+)</b></font>
+<br>
+<br>
+StochAstic Recusive gRadient algoritHm (SARAH), is a variance reducing stochastic recursive gradient algorithm which employs the stochastic recursive gradient, for solving empirical loss minimization for the case of nonconvex losses.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>SARAH(<i>stepSize, batchSize, maxIterations, innerIterations, tolerance, shuffle, updatePolicy</i>)</li>
+  <li>SARAH(<i>stepSize, batchSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Instantiated cooling schedule (default ExponentialSchedule).</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Batch size to use for each step.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>innerIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The number of inner iterations allowed (0 means n / batchSize). Note that the full gradient is only calculated in the outer iteration.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the function order is shuffled; otherwise, each function is visited in linear order.</td>
+</tr>
+
+<tr>
+<td><code>UpdatePolicyType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>updatePolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Instantiated update policy used to adjust the given parameters.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<li>For convenience the following typedefs have been defined:</li>
+
+<ul>
+<table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>SARAH</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>SARAHType&lt;SARAHUpdate&gt;</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>SARAH_Plus</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>SARAHType&lt;SARAHPlusUpdate&gt;</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+SARAH optimizer(0.01, 1, 5000, 0, 1e-5, true);  // Standard stochastic variance reduced gradient.
+optimizer.Optimize(f, coordinates);
+
+SARAH_Plus optimizerPlus(0.01, 1, 5000, 0, 1e-5, true);  // Stochastic variance reduced gradient with Barzilai-Borwein.
+optimizerPlus.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://arxiv.org/abs/1705.07261">Stochastic Recursive Gradient Algorithm for Nonconvex Optimization</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">Stochastic gradient descent in Wikipedia</a></li>
+
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- SGDR CONTENT -->
+<a name="part_sgdr"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Stochastic Gradient Descent with Restarts (SGDR)</b></font>
+<br>
+<br>
+SGDR is based on Mini-batch Stochastic Gradient Descent class and simulates a new warm-started run/restart once a number of epochs are performed.
+<a name="Attributes"></a>
+<br>
+<br>
+<li>Examples:</li>
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>SGDR(<i>epochRestart, multFactor, batchSize, stepSize, maxIterations, tolerance, shuffle, updatePolicy</i>)</li>
+  <li>SGDR(<i>epochRestart, multFactor, batchSize, stepSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>epochRestart</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Initial epoch where decay is applied.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>multFactor</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Batch size multiplication factor.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Size of each mini-batch.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the mini-batch order is shuffled; otherwise, each mini-batch is visited in linear order.</td>
+</tr>
+
+<tr>
+<td><code>UpdatePolicyType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>updatePolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Instantiated update policy used to adjust the given parameters.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+SGDR<> optimizer(50, 2.0, 1, 0.01, 10000, 1e-3);
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://arxiv.org/abs/1608.03983">SGDR: Stochastic Gradient Descent with Warm Restarts</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">Stochastic gradient descent in Wikipedia</a></li>
+
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- SnapshotSGDR CONTENT -->
+<a name="part_snapshotsgdr"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Snapshot Stochastic Gradient Descent with Restarts (SnapshotSGDR)</b></font>
+<br>
+<br>
+Mini-batch Stochastic Gradient Descent class and simulates a new warm-started run/restart once a number of epochs are performed using the Snapshot ensembles technique.
+<a name="Attributes"></a>
+<br>
+<br>
+<li>Examples:</li>
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>SnapshotSGDR(<i>epochRestart, multFactor, batchSize, stepSize, maxIterations, tolerance, shuffle, snapshots, accumulate, updatePolicy</i>)</li>
+  <li>SnapshotSGDR(<i>epochRestart, multFactor, batchSize, stepSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>epochRestart</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Initial epoch where decay is applied.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>multFactor</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Batch size multiplication factor.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Size of each mini-batch.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the mini-batch order is shuffled; otherwise, each mini-batch is visited in linear order.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>snapshots</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of snapshots.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>accumulate</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Accumulate the snapshot parameter (default true).</td>
+</tr>
+
+<tr>
+<td><code>UpdatePolicyType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>updatePolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Instantiated update policy used to adjust the given parameters.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+SnapshotSGDR<> optimizer(50, 2.0, 1, 0.01, 10000, 1e-3);
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://arxiv.org/abs/1704.00109">Snapshot ensembles: Train 1, get m for free</a></li>
+<li><a href="https://arxiv.org/abs/1608.03983">SGDR: Stochastic Gradient Descent with Warm Restarts</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">Stochastic gradient descent in Wikipedia</a></li>
+
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- SMORMS3 CONTENT -->
+<a name="part_smorms3"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>SMORMS3</b></font>
+<br>
+<br>
+SMORMS3 is a hybrid of RMSprop, which is trying to estimate a safe and optimal distance based on curvature or perhaps just normalizing the stepsize in the parameter space.
+<a name="Attributes"></a>
+<br>
+<br>
+<li>Examples:</li>
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>SMORMS3(<i>stepSize, batchSize, epsilon, maxIterations, tolerance</i>)</li>
+  <li>SMORMS3(<i>stepSize, batchSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Number of points to process at each step.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>epsilon</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Value used to initialise the mean squared gradient parameter.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the mini-batch order is shuffled; otherwise, each mini-batch is visited in linear order.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+SMORMS3 optimizer(0.001, 1, 1e-16, 5000000, 1e-9, true);
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://sifter.org/simon/journal/20150420.html">RMSprop loses to SMORMS3 - Beware the Epsilon!</a></li>
+<li><a href="#part_rmsprop">RMSProp</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">Stochastic gradient descent in Wikipedia</a></li>
+
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- SVRG CONTENT -->
+<a name="part_svrg"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Standard stochastic variance reduced gradient (SVRG)</b></font>
+<br>
+<br>
+Stochastic Variance Reduced Gradient is a technique for minimizing smooth and strongly convex problems.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>SVRG(<i>stepSize, batchSize, maxIterations, innerIterations, tolerance, shuffle, updatePolicy, decayPolicy, resetPolicy</i>)</li>
+  <li>SVRG(<i>stepSize, batchSize, maxIterations, innerIterations</i>)</li>
+  <li>SVRG(<i>stepSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Initial batch size.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>innerIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>The number of inner iterations allowed (0 means n / batchSize). Note that the full gradient is only calculated in the outer iteration.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the batch order is shuffled; otherwise, each batch is visited in linear order.</td>
+</tr>
+
+<tr>
+<td><code>UpdatePolicyType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>updatePolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Instantiated update policy used to adjust the given parameters.</td>
+</tr>
+
+<tr>
+<td><code>DecayPolicyType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>decayPolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Instantiated decay policy used to adjust the step size.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>resetPolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Flag that determines whether update policy parameters are reset before every Optimize call.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<li>For convenience the following typedefs have been defined:</li>
+
+<ul>
+<table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>SVRG</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>SVRGType&lt;SVRGUpdate, NoDecay&gt;</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: right;">
+      <code>SVRG_BB</code>
+      </td>
+      <td style="vertical-align: top;">
+      &nbsp;=&nbsp;
+      </td>
+      <td style="vertical-align: top;">
+      <code>SVRGType&lt;SVRGUpdate, BarzilaiBorweinDecay&gt;</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+SVRG optimizer(0.005, 1, 300, 0, 1e-10, true); // Standard stochastic variance reduced gradient.
+optimizer.Optimize(f, coordinates);
+
+SVRG_BB bbOptimizer(0.005, batchSize, 300, 0, 1e-10, true, SVRGUpdate(), BarzilaiBorweinDecay(0.1)); // Stochastic variance reduced gradient with Barzilai-Borwein.
+bbOptimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://papers.nips.cc/paper/4937-accelerating-stochastic-gradient-descent-using-predictive-variance-reduction.pdf">Accelerating Stochastic Gradient Descent using Predictive Variance Reduction</a></li>
+<li><a href="#SGD">SGD</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">SGD in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- SMORMS3 CONTENT -->
+<a name="part_smorms3"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>SMORMS3</b></font>
+<br>
+<br>
+SMORMS3 is a hybrid of RMSprop, which is trying to estimate a safe and optimal distance based on curvature or perhaps just normalizing the stepsize in the parameter space.
+<a name="Attributes"></a>
+<br>
+<br>
+<li>Examples:</li>
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>SMORMS3(<i>stepSize, batchSize, epsilon, maxIterations, tolerance</i>)</li>
+  <li>SMORMS3(<i>stepSize, batchSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Number of points to process at each step.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>epsilon</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Value used to initialise the mean squared gradient parameter.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the mini-batch order is shuffled; otherwise, each mini-batch is visited in linear order.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+SMORMS3 optimizer(0.001, 1, 1e-16, 5000000, 1e-9, true);
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://sifter.org/simon/journal/20150420.html">RMSprop loses to SMORMS3 - Beware the Epsilon!</a></li>
+<li><a href="#part_rmsprop">RMSProp</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">Stochastic gradient descent in Wikipedia</a></li>
+
+</ul>
+</li>
+<br>
+</ul>
+
+<!-- SPALeRASGD CONTENT -->
+<a name="part_spalerasgd"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>SPALeRA Stochastic Gradient Descent (SPALeRASGD).</b></font>
+<br>
+<br>
+SALERA involves two components: a learning rate adaptation scheme, which ensures that the learning system goes as fast as it can; and a catastrophic event manager, which is in charge of detecting undesirable behaviors and getting the system back on track.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>SPALeRA(<i>stepSize, batchSize, maxIterations, tolerance, lambda, alpha, epsilon, adaptRate, shuffle, decayPolicy, resetPolicy</i>)</li>
+  <li>SPALeRA(<i>stepSize, batchSize, maxIterations, tolerance</i>)</li>
+  <li>SPALeRA(<i>stepSize, batchSize</i>)</li>
+</ul>
+
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>stepSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Step size for each iteration.</td>
+</tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>batchSize</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Initial batch size.</td>
+</tr>
+<tr>
+
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>tolerance</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum absolute tolerance to terminate algorithm.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>lambda</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Page-Hinkley update parameter.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>alpha</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Memory parameter of the Agnostic Learning Rate adaptation.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>epsilon</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Numerical stability parameter.</td>
+</tr>
+
+<tr>
+<td><code>double</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>adaptRate</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Agnostic learning rate update rate. shuffle If true, the function order is shuffled; otherwise, each function is visited in linear order.</td>
+</tr>
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>shuffle</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>If true, the batch order is shuffled; otherwise, each batch is visited in linear order.</td>
+</tr>
+
+<tr>
+<td><code>DecayPolicyType</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>decayPolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Instantiated decay policy used to adjust the step size.</td>
+</tr>
+
+<tr>
+<td><code>bool</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>resetPolicy</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Flag that determines whether update policy parameters are reset before every Optimize call.</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+RosenbrockFunction f;
+arma::mat coordinates = f.GetInitialPoint();
+
+SPALeRASGD<> optimizer(0.05, 1, 10000, 1e-4);
+optimizer.Optimize(f, coordinates);
+</pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://arxiv.org/abs/1709.01427">Stochastic Gradient Descent: Going As Fast As Possible But Not Faster</a></li>
+<li><a href="#SGD">SGD</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">SGD in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="example_prog"></a>
+<b>example program</b>
+<br>
+<ul>
+<pre>
+[under construction]
+</pre>
+<li>
+If you save the above program as <i>example.cpp</i>,
+under Linux and Mac OS X it can be compiled using:
+<br>
+<code>g++ example.cpp -o example -O2 -larmadillo</code>
+</li>
+<br>
+<li>
+Since ensmallen is a template library, it's a good idea to enable compiler optimizations
+(eg. when compiling with GCC or clang, use the -O2 or -O3 options)
+</li>
+<br>
+</ul>
+<br>
+
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="api_additions"></a>
+<b>History of API Additions, Changes and Deprecations</b>
+<br>
+<ul>
+
+<li>
+API policy: ensmallen follows <a href="https://semver.org/">semantic versioning</a>
+</li>
+<br>
+
+<!--
+<a name="version_120"></a>
+<li>Version 1.20:
+<ul>
+<li>TODO</li>
+</ul>
+</li>
+<br>
+-->
+
+<a name="version_110"></a>
+<li>Version 1.10:
+<ul>
+<li>initial release</li>
+</ul>
+</li>
+
+
+</ul>
+
+<!-- END CONTENT -->
+
+<br>
+<br>
+<br>
+
+</div>
+
+</body>
+</html>
