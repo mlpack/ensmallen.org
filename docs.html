@@ -4,7 +4,7 @@
   <meta content="text/html;" http-equiv="Content-Type">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="ensmallen_icon.png" type="image/png">
-  <link type="text/css" rel="stylesheet" href="style.css"> 
+  <link type="text/css" rel="stylesheet" href="style.css">
   <title>ensmallen: flexible C++ library for efficient mathematical optimization</title>
 </head>
 <body>
@@ -200,7 +200,6 @@ arma::mat coordinates = f.GetInitialPoint();
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -295,7 +294,6 @@ arma::mat coordinates = f.GetInitialPoint();
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -504,7 +502,6 @@ OptimisticAdam optimisticAdamOptimizer(1e-2, 1, 0.9, 0.99, 1e-8); // OptimisticA
 optimisticAdamOptimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -646,7 +643,6 @@ BBS_Armijo bbsgd(batchSize, 0.01, 0.1, 8000, 1e-4); // Big-Batch SGD with backtr
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -767,14 +763,13 @@ CMA-ES - Covariance Matrix Adaptation Evolution Strategy is s a stochastic searc
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-CMAES<> optimizer(0, -1, 1, 32, 200, 0.1e-4); // CMAES with the FullSelection policy.
+CMAES&lt;&gt; optimizer(0, -1, 1, 32, 200, 0.1e-4); // CMAES with the FullSelection policy.
 optimizer.Optimize(f, coordinates);
 
-ApproxCMAES<>  approxOptimizer(batchSize, 0.01, 0.1, 8000, 1e-4); // CMAES with the RandomSelection policy.
+ApproxCMAES&lt;&gt;  approxOptimizer(batchSize, 0.01, 0.1, 8000, 1e-4); // CMAES with the RandomSelection policy.
 approxOptimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -887,7 +882,6 @@ CNE optimizer(200, 10000, 0.2, 0.2, 0.3, 65, 0.1e-4);
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -989,7 +983,6 @@ Frank-Wolfe is a technique to minimize a continuously differentiable convex func
 <pre>
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -1068,7 +1061,6 @@ GradientDescent optimizer(0.001, 0, 1e-15);
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -1155,7 +1147,6 @@ IQN optimizer(0.01, 1, 5000, 1e-5);
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -1293,7 +1284,6 @@ KatyushaProximal proximalOptimizer(1.0, 10.0, 1, 100, 0, 1e-10, true);  // With 
 proximalOptimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -1421,7 +1411,6 @@ L_BFGS optimizer(20);
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -1535,7 +1524,6 @@ RMSProp optimizer(1e-3, 1, 0.99, 1e-8, 5000000, 1e-9, true);
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -1667,11 +1655,10 @@ Simulated Annealing is an stochastic optimization algorithm which is able to del
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-SA<ExponentialSchedule> optimizer(ExponentialSchedule(), 1000000, 1000., 1000, 100, 1e-10, 3, 1.5, 0.5, 0.3
+SA&lt;ExponentialSchedule&gt; optimizer(ExponentialSchedule(), 1000000, 1000., 1000, 100, 1e-10, 3, 1.5, 0.5, 0.3
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -1817,7 +1804,6 @@ SARAH_Plus optimizerPlus(0.01, 1, 5000, 0, 1e-5, true);  // Stochastic variance 
 optimizerPlus.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -1935,11 +1921,10 @@ SGDR is based on Mini-batch Stochastic Gradient Descent class and simulates a ne
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-SGDR<> optimizer(50, 2.0, 1, 0.01, 10000, 1e-3);
+SGDR&lt;&gt; optimizer(50, 2.0, 1, 0.01, 10000, 1e-3);
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -2073,11 +2058,10 @@ Mini-batch Stochastic Gradient Descent class and simulates a new warm-started ru
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-SnapshotSGDR<> optimizer(50, 2.0, 1, 0.01, 10000, 1e-3);
+SnapshotSGDR&lt;&gt; optimizer(50, 2.0, 1, 0.01, 10000, 1e-3);
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -2184,7 +2168,6 @@ SMORMS3 optimizer(0.001, 1, 1e-16, 5000000, 1e-9, true);
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -2348,7 +2331,6 @@ SVRG_BB bbOptimizer(0.005, batchSize, 300, 0, 1e-10, true, SVRGUpdate(), Barzila
 bbOptimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -2454,7 +2436,6 @@ SMORMS3 optimizer(0.001, 1, 1e-16, 5000000, 1e-9, true);
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -2595,11 +2576,10 @@ SALERA involves two components: a learning rate adaptation scheme, which ensures
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-SPALeRASGD<> optimizer(0.05, 1, 10000, 1e-4);
+SPALeRASGD&lt;&gt; optimizer(0.05, 1, 10000, 1e-4);
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -2772,7 +2752,6 @@ NesterovMomentumSGD nesterovOptimizer(0.0001, 1, 0, 1e-15, true, NesterovMomentu
 nesterovOptimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
@@ -2870,11 +2849,10 @@ The interval at which the objective is to be reported and checked for convergenc
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-SCD<> optimizer(0.4);
+SCD&lt;&gt; optimizer(0.4);
 optimizer.Optimize(f, coordinates);
 </pre>
 </ul>
-</li>
 <li>
 See also:
 <ul>
