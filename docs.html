@@ -701,13 +701,13 @@ The following optimizers can be used with differentiable functions:
 <ul>
 <li><a href="#type_sgd">Stochastic gradient descent (SGD)</a>
 (<code>ens::SGD&lt;&gt;</code>)</li>
-<li><a href="#type_adam">Adam</a> (<code>ens::Adam&lt;&gt;</code>)</li>
-<li><a href="#type_adagrad">AdaGrad</a> (<code>ens::AdaGrad&lt;&gt;</code>)</li>
-<li><a href="#type_adadelta">AdaDelta</a> (<code>ens::AdaDelta&lt;&gt;</code>)</li> 
-<li><a href="#type_katyusha">Katyusha</a> (<code>ens::Katyusha</code>)</li>
-<li><a href="#type_rmsprop">RMSprop</a> (<code>ens::RMSProp&lt;&gt;</code>)</li>
-<li><a href="#type_sgdr">SGD with restarts (SGDR)</a> (<code>ens::SGDR&lt;&gt;</code>)</li>
-<li><a href="#type_smorms3">SMORMS3</a> (<code>ens::SMORMS3&lt;&gt;</code>)</li>
+<li><a href="#part_adam">Adam</a> (<code>ens::Adam&lt;&gt;</code>)</li>
+<li><a href="#part_adagrad">AdaGrad</a> (<code>ens::AdaGrad&lt;&gt;</code>)</li>
+<li><a href="#part_adadelta">AdaDelta</a> (<code>ens::AdaDelta&lt;&gt;</code>)</li>
+<li><a href="#part_katyusha">Katyusha</a> (<code>ens::Katyusha</code>)</li>
+<li><a href="#part_rmsprop">RMSprop</a> (<code>ens::RMSProp&lt;&gt;</code>)</li>
+<li><a href="#part_sgdr">SGD with restarts (SGDR)</a> (<code>ens::SGDR&lt;&gt;</code>)</li>
+<li><a href="#part_smorms3">SMORMS3</a> (<code>ens::SMORMS3&lt;&gt;</code>)</li>
 <li>TODO: add more...</li>
 <li>any (non-separable) <a href="#type_differentiable_list">differentiable function optimizer</a></li>
 <li>any (non-differentiable) <a href="#type_arbitrary_list">separable arbitrary optimizer</a></li>
@@ -856,7 +856,7 @@ If either of these methods are available, then any ensmallen optimizer that
 optimizes sparse separable differentiable functions may be used.  This
 includes:
 <ul>
-<li><a href="#type_parallelsgd">Parallel SGD (Hogwild!)</a> (<code>ens::ParallelSGD</code>)</li>
+<li><a href="#part_parallelsgd">Parallel SGD (Hogwild!)</a> (<code>ens::ParallelSGD</code>)</li>
 </ul>
 <br>
 <br>
