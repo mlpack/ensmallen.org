@@ -98,6 +98,7 @@ this, a <b>function type</b> must be implemented and used with an
 <li><a href="#part_adadelta">AdaDelta</a></li>
 <li><a href="#part_adagrad">Adagrad</a></li>
 <li><a href="#part_adam">Adam, AdaMax, AMSGrad, Nadam, NadaMax, OptimisticAdam</a></li>
+<li><a href="#part_auglagrangian">Augmented Lagrangian</a></li>
 <li><a href="#part_bigbatchsgd">Big Batch SGD (BB SGD)</a></li>
 <li><a href="#part_cmaes">Covariance Matrix Adaptation Evolution Strategy (CMA-ES)</a></li>
 <li><a href="#part_cne">Conventional Neural Evolution (CNE)</a></li>
@@ -1216,7 +1217,7 @@ Adadelta is an extension of Adagrad that adapts learning rates based on a moving
   <li>AdaDelta(<i>stepSize, batchSize</i>)</li>
   <li>AdaDelta(<i>stepSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 
 <ul>
@@ -1318,7 +1319,7 @@ Adagrad is an optimizer with parameter-specific learning rates, which are adapte
   <li>Adagrad(<i>stepSize, batchSize</i>)</li>
   <li>Adagrad(<i>stepSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
@@ -1330,6 +1331,7 @@ Adagrad is an optimizer with parameter-specific learning rates, which are adapte
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Step size for each iteration.</td>
 </tr>
+
 <tr>
 <td><code>size_t</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -1337,6 +1339,7 @@ Adagrad is an optimizer with parameter-specific learning rates, which are adapte
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Number of points to process in one step.</td>
 </tr>
+
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -1344,6 +1347,7 @@ Adagrad is an optimizer with parameter-specific learning rates, which are adapte
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Value used to initialise the mean squared gradient parameter.</td>
 </tr>
+
 <tr>
 <td><code>size_t</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -1351,6 +1355,7 @@ Adagrad is an optimizer with parameter-specific learning rates, which are adapte
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Maximum number of iterations allowed (0 means no limit).</td>
 </tr>
+
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -1358,6 +1363,7 @@ Adagrad is an optimizer with parameter-specific learning rates, which are adapte
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Maximum absolute tolerance to terminate algorithm.</td>
 </tr>
+
 <tr>
 <td><code>bool</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -1413,12 +1419,11 @@ Adam is an optimizer that computes individual adaptive learning rates for differ
   <li>Adam(<i>stepSize, batchSize, maxIterations, tolerance, shuffle</i>)</li>
   <li>Adam(<i>stepSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -1434,7 +1439,6 @@ Adam is an optimizer that computes individual adaptive learning rates for differ
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Initial batch size.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>double</code></td>
@@ -1483,14 +1487,12 @@ Adam is an optimizer that computes individual adaptive learning rates for differ
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>If true, the batch order is shuffled; otherwise, each batch is visited in linear order.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
 <ul>
 
-
+<br>
 <li>For convenience the following typedefs have been defined:</li>
 
 <ul>
@@ -1602,6 +1604,64 @@ See also:
 <br>
 </ul>
 
+<!-- AugLagrangian CONTENT -->
+<a name="part_auglagrangian"></a>
+<div class="pagebreak"></div>
+<hr class="greyline">
+<br>
+<br>
+<font size=+1><b>Augmented Lagrangian</b></font>
+<br>
+<br>
+Augmented Lagrangian method is a constrained optimization method that seeks a solution by replacing the original constrained problem by a sequence of unconstrained subproblems. Also known as the method of multipliers, the augmented Lagrangian method introduces explicit Lagrangian multiplier estimates at each step.
+<a name="Attributes"></a>
+
+<br>
+<br>
+<b>Constructors</b>
+
+<ul>
+  <li>AugLagrangian(<i>maxIterations</i>)</li>
+  <li>AugLagrangian(<i></i>)</li>
+</ul>
+<br>
+<b>Attributes</b>
+<ul>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td><code>size_t</code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td><code><b>maxIterations</b></code></td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>Maximum number of iterations allowed (0 means no limit).</td>
+</tr>
+</tbody>
+</table>
+</ul>
+<ul>
+
+<br>
+<li>Examples:</li>
+<ul>
+<pre>
+AugLagrangianTestFunction f;
+arma::vec coords = f.GetInitialPoint();
+
+AugLagrangian optimizer;
+optimizer.Optimize(f, coords);
+</pre>
+</ul>
+<li>
+See also:
+<ul>
+<li><a href="https://link.springer.com/article/10.1007/BF00927673">Multiplier and gradient methods</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Augmented_Lagrangian_method">Augmented Lagrangian method in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
 <!-- Big Batch SGD CONTENT -->
 <a name="part_bigbatchsgd"></a>
 <div class="pagebreak"></div>
@@ -1623,12 +1683,11 @@ Big Batch SGD adaptively grows the batch size over time to maintain a nearly con
   <li>BigBatchSGD(<i>stepSize, batchSize</i>)</li>
   <li>BigBatchSGD(<i>stepSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>size_t</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -1636,7 +1695,6 @@ Big Batch SGD adaptively grows the batch size over time to maintain a nearly con
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Initial batch size.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>double</code></td>
@@ -1677,14 +1735,12 @@ Big Batch SGD adaptively grows the batch size over time to maintain a nearly con
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>If true, the batch order is shuffled; otherwise, each batch is visited in linear order.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
 <ul>
 
-
+<br>
 <li>For convenience the following typedefs have been defined:</li>
 
 <ul>
@@ -1762,12 +1818,11 @@ CMA-ES - Covariance Matrix Adaptation Evolution Strategy is s a stochastic searc
   <li>CMAES(<i>lambda, lowerBound, upperBound, batchSize</i>)</li>
   <li>CMAES(<i>lambda, lowerBound, upperBound</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>size_t</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -1775,7 +1830,6 @@ CMA-ES - Covariance Matrix Adaptation Evolution Strategy is s a stochastic searc
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>The population size (0 use the default size).</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>double</code></td>
@@ -1816,13 +1870,12 @@ CMA-ES - Covariance Matrix Adaptation Evolution Strategy is s a stochastic searc
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Instantiated selection policy used to calculate the objective (default FullSelection).</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
 <ul>
 
+<br>
 <li>For convenience the following typedefs have been defined:</li>
 
 <ul>
@@ -1889,12 +1942,11 @@ Conventional Neural Evolution is an optimizer that works like biological evoluti
   <li>CNE(<i>populationSize, maxGenerations, mutationProb, mutationSize</i>)</li>
   <li>CNE(<i>populationSize, maxGenerations</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>size_t</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -1902,7 +1954,6 @@ Conventional Neural Evolution is an optimizer that works like biological evoluti
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>The number of candidates in the population. This should be at least 4 in size.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>size_t</code></td>
@@ -1951,8 +2002,6 @@ Conventional Neural Evolution is an optimizer that works like biological evoluti
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Minimum change in best fitness values between two consecutive generations should be greater than threshold. If set to negative value, objectiveChange is not considered.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
@@ -1999,12 +2048,11 @@ Frank-Wolfe is a technique to minimize a continuously differentiable convex func
   <li>FrankWolfe(<i>linearConstrSolver, updateRule, maxIterations, tolerance</i>)</li>
   <li>FrankWolfe(<i>linearConstrSolver, updateRule</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>LinearConstrSolverType</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -2012,7 +2060,6 @@ Frank-Wolfe is a technique to minimize a continuously differentiable convex func
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Solver for linear constrained problem.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>UpdateRuleType</code></td>
@@ -2037,13 +2084,12 @@ Frank-Wolfe is a technique to minimize a continuously differentiable convex func
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Maximum absolute tolerance to terminate algorithm.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
 <ul>
 
+<br>
 <li>For convenience the following typedefs have been defined:</li>
 
 <ul>
@@ -2100,12 +2146,11 @@ Gradient Descent is a technique to minimize a function. To find a local minimum 
   <li>GradientDescent(<i>stepSize, maxIterations, tolerance</i>)</li>
   <li>GradientDescent(<i>stepSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -2113,7 +2158,6 @@ Gradient Descent is a technique to minimize a function. To find a local minimum 
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Step size for each iteration.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>size_t</code></td>
@@ -2129,8 +2173,6 @@ Gradient Descent is a technique to minimize a function. To find a local minimum 
 <td><code><b>tolerance</b></code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Maximum absolute tolerance to terminate algorithm.</td>
-</tr>
-
 </tr>
 </tbody>
 </table>
@@ -2178,12 +2220,11 @@ The Incremental Quasi-Newton belongs to the family of stochastic and incremental
   <li>IQN(<i>stepSize, batchSize, maxIterations, tolerance</i>)</li>
   <li>IQN(<i>stepSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -2191,7 +2232,6 @@ The Incremental Quasi-Newton belongs to the family of stochastic and incremental
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Step size for each iteration.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>size_t</code></td>
@@ -2215,8 +2255,6 @@ The Incremental Quasi-Newton belongs to the family of stochastic and incremental
 <td><code><b>tolerance</b></code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Maximum absolute tolerance to terminate algorithm.</td>
-</tr>
-
 </tr>
 </tbody>
 </table>
@@ -2267,12 +2305,11 @@ Katyusha is a direct, primal-only stochastic gradient method which uses a "negat
   <li>Katyusha(<i>convexity, lipschitz, batchSize</i>)</li>
   <li>Katyusha(<i>convexity, lipschitz</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -2280,7 +2317,6 @@ Katyusha is a direct, primal-only stochastic gradient method which uses a "negat
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>The population size (0 use the default size).</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>double</code></td>
@@ -2329,14 +2365,12 @@ Katyusha is a direct, primal-only stochastic gradient method which uses a "negat
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>If true, the function order is shuffled; otherwise, each function is visited in linear order.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
 <ul>
 
-
+<br>
 <li>For convenience the following typedefs have been defined:</li>
 
 <ul>
@@ -2402,12 +2436,11 @@ L-BFGS is an optimization algorithm in the family of quasi-Newton methods that a
   <li>L_BFGS(<i>numBasis, maxIterations, armijoConstant, wolfe, minGradientNorm, factr, maxLineSearchTrials, minStep, maxStep</i>)</li>
   <li>L_BFGS(<i>numBasis, maxIterations, armijoConstant, wolfe, minGradientNorm, factr, maxLineSearchTrials</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>size_t</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -2415,7 +2448,6 @@ L-BFGS is an optimization algorithm in the family of quasi-Newton methods that a
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Number of memory points to be stored (default 5).</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>size_t</code></td>
@@ -2480,8 +2512,6 @@ L-BFGS is an optimization algorithm in the family of quasi-Newton methods that a
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>The maximum step of the line search.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
@@ -2531,12 +2561,11 @@ RMSProp utilizes the magnitude of recent gradients to normalize the gradients.
   <li>RMSProp(<i>stepSize, batchSize, alpha, epsilon, maxIterations, tolerance, shuffle</i>)</li>
   <li>RMSProp(<i>stepSize, batchSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -2544,7 +2573,6 @@ RMSProp utilizes the magnitude of recent gradients to normalize the gradients.
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Step size for each iteration.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>size_t</code></td>
@@ -2593,8 +2621,6 @@ RMSProp utilizes the magnitude of recent gradients to normalize the gradients.
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>If true, the function order is shuffled; otherwise, each function is visited in linear order.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
@@ -2642,12 +2668,11 @@ Simulated Annealing is an stochastic optimization algorithm which is able to del
   <li>SA(<i>coolingSchedule, maxIterations, initT, initMoves, moveCtrlSweep, tolerance, maxToleranceSweep, maxMoveCoef, initMoveCoef, gain</i>)</li>
   <li>SA(<i>coolingSchedule, maxIterations</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>CoolingScheduleType</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -2655,7 +2680,6 @@ Simulated Annealing is an stochastic optimization algorithm which is able to del
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Instantiated cooling schedule (default ExponentialSchedule).</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>size_t</code></td>
@@ -2728,8 +2752,6 @@ Simulated Annealing is an stochastic optimization algorithm which is able to del
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Proportional control in feedback move control.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
@@ -2777,12 +2799,11 @@ StochAstic Recusive gRadient algoritHm (SARAH), is a variance reducing stochasti
   <li>SARAH(<i>stepSize, batchSize, maxIterations, innerIterations, tolerance, shuffle, updatePolicy</i>)</li>
   <li>SARAH(<i>stepSize, batchSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -2790,7 +2811,6 @@ StochAstic Recusive gRadient algoritHm (SARAH), is a variance reducing stochasti
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Instantiated cooling schedule (default ExponentialSchedule).</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>size_t</code></td>
@@ -2839,13 +2859,13 @@ StochAstic Recusive gRadient algoritHm (SARAH), is a variance reducing stochasti
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Instantiated update policy used to adjust the given parameters.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
 <ul>
 
+
+<br>
 <li>For convenience the following typedefs have been defined:</li>
 
 <ul>
@@ -2913,9 +2933,7 @@ See also:
 <br>
 SGDR is based on Mini-batch Stochastic Gradient Descent class and simulates a new warm-started run/restart once a number of epochs are performed.
 <a name="Attributes"></a>
-<br>
-<br>
-<li>Examples:</li>
+
 <br>
 <br>
 <b>Constructors</b>
@@ -2924,12 +2942,11 @@ SGDR is based on Mini-batch Stochastic Gradient Descent class and simulates a ne
   <li>SGDR(<i>epochRestart, multFactor, batchSize, stepSize, maxIterations, tolerance, shuffle, updatePolicy</i>)</li>
   <li>SGDR(<i>epochRestart, multFactor, batchSize, stepSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>size_t</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -2945,7 +2962,6 @@ SGDR is based on Mini-batch Stochastic Gradient Descent class and simulates a ne
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Batch size multiplication factor.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>size_t</code></td>
@@ -2994,8 +3010,6 @@ SGDR is based on Mini-batch Stochastic Gradient Descent class and simulates a ne
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Instantiated update policy used to adjust the given parameters.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
@@ -3034,9 +3048,7 @@ See also:
 <br>
 Mini-batch Stochastic Gradient Descent class and simulates a new warm-started run/restart once a number of epochs are performed using the Snapshot ensembles technique.
 <a name="Attributes"></a>
-<br>
-<br>
-<li>Examples:</li>
+
 <br>
 <br>
 <b>Constructors</b>
@@ -3045,12 +3057,11 @@ Mini-batch Stochastic Gradient Descent class and simulates a new warm-started ru
   <li>SnapshotSGDR(<i>epochRestart, multFactor, batchSize, stepSize, maxIterations, tolerance, shuffle, snapshots, accumulate, updatePolicy</i>)</li>
   <li>SnapshotSGDR(<i>epochRestart, multFactor, batchSize, stepSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>size_t</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -3066,7 +3077,6 @@ Mini-batch Stochastic Gradient Descent class and simulates a new warm-started ru
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Batch size multiplication factor.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>size_t</code></td>
@@ -3131,8 +3141,6 @@ Mini-batch Stochastic Gradient Descent class and simulates a new warm-started ru
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Instantiated update policy used to adjust the given parameters.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
@@ -3183,12 +3191,11 @@ SMORMS3 is a hybrid of RMSprop, which is trying to estimate a safe and optimal d
   <li>SMORMS3(<i>stepSize, batchSize, epsilon, maxIterations, tolerance</i>)</li>
   <li>SMORMS3(<i>stepSize, batchSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -3204,7 +3211,6 @@ SMORMS3 is a hybrid of RMSprop, which is trying to estimate a safe and optimal d
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Number of points to process at each step.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>double</code></td>
@@ -3236,8 +3242,6 @@ SMORMS3 is a hybrid of RMSprop, which is trying to estimate a safe and optimal d
 <td><code><b>shuffle</b></code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>If true, the mini-batch order is shuffled; otherwise, each mini-batch is visited in linear order.</td>
-</tr>
-
 </tr>
 </tbody>
 </table>
@@ -3288,12 +3292,11 @@ Stochastic Variance Reduced Gradient is a technique for minimizing smooth and st
   <li>SVRG(<i>stepSize, batchSize, maxIterations, innerIterations</i>)</li>
   <li>SVRG(<i>stepSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -3309,7 +3312,6 @@ Stochastic Variance Reduced Gradient is a technique for minimizing smooth and st
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Initial batch size.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>size_t</code></td>
@@ -3366,13 +3368,12 @@ Stochastic Variance Reduced Gradient is a technique for minimizing smooth and st
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Flag that determines whether update policy parameters are reset before every Optimize call.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
 <ul>
 
+<br>
 <li>For convenience the following typedefs have been defined:</li>
 
 <ul>
@@ -3451,12 +3452,11 @@ SMORMS3 is a hybrid of RMSprop, which is trying to estimate a safe and optimal d
   <li>SMORMS3(<i>stepSize, batchSize, epsilon, maxIterations, tolerance</i>)</li>
   <li>SMORMS3(<i>stepSize, batchSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -3472,7 +3472,6 @@ SMORMS3 is a hybrid of RMSprop, which is trying to estimate a safe and optimal d
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Number of points to process at each step.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>double</code></td>
@@ -3504,8 +3503,6 @@ SMORMS3 is a hybrid of RMSprop, which is trying to estimate a safe and optimal d
 <td><code><b>shuffle</b></code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>If true, the mini-batch order is shuffled; otherwise, each mini-batch is visited in linear order.</td>
-</tr>
-
 </tr>
 </tbody>
 </table>
@@ -3556,12 +3553,11 @@ SALERA involves two components: a learning rate adaptation scheme, which ensures
   <li>SPALeRA(<i>stepSize, batchSize, maxIterations, tolerance</i>)</li>
   <li>SPALeRA(<i>stepSize, batchSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -3577,7 +3573,6 @@ SALERA involves two components: a learning rate adaptation scheme, which ensures
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Initial batch size.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>size_t</code></td>
@@ -3649,8 +3644,6 @@ SALERA involves two components: a learning rate adaptation scheme, which ensures
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Flag that determines whether update policy parameters are reset before every Optimize call.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
@@ -3699,12 +3692,11 @@ Stochastic Gradient Descent is a technique for minimizing a function which can b
   <li>SGD(<i>stepSize, batchSize, maxIterations, tolerance, shuffle</i>)</li>
   <li>SGD(<i>stepSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -3720,7 +3712,6 @@ Stochastic Gradient Descent is a technique for minimizing a function which can b
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Initial batch size.</td>
 </tr>
-<tr>
 
 <tr>
 <td><code>size_t</code></td>
@@ -3769,14 +3760,12 @@ Stochastic Gradient Descent is a technique for minimizing a function which can b
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>Flag that determines whether update policy parameters are reset before every Optimize call.</td>
 </tr>
-
-</tr>
 </tbody>
 </table>
 </ul>
 <ul>
 
-
+<br>
 <li>For convenience the following typedefs have been defined:</li>
 
 <ul>
@@ -3869,12 +3858,11 @@ Stochastic Coordinate descent is a technique for minimizing a function by doing 
   <li>SCD(<i>stepSize, maxIterations, tolerance, updateInterval</i>)</li>
   <li>SCD(<i>stepSize</i>)</li>
 </ul>
-
+<br>
 <b>Attributes</b>
 <ul>
 <table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
 <tbody>
-
 <tr>
 <td><code>double</code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
@@ -3921,8 +3909,6 @@ The interval at which the objective is to be reported and checked for convergenc
 <td><code><b>epsilon</b></code></td>
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>he policy to use for picking up the coordinate to descend on.</td>
-</tr>
-
 </tr>
 </tbody>
 </table>
