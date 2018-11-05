@@ -366,11 +366,13 @@ and `Shuffle()`.
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-BBS_BB bbsgd(batchSize, 0.01, 0.1, 8000, 1e-4); // Big-Batch SGD with the adaptive stepsize policy.
+// Big-Batch SGD with the adaptive stepsize policy.
+BBS_BB optimizer(batchSize, 0.01, 0.1, 8000, 1e-4);
 optimizer.Optimize(f, coordinates);
 
-BBS_Armijo bbsgd(batchSize, 0.01, 0.1, 8000, 1e-4); // Big-Batch SGD with backtracking line search.
-optimizer.Optimize(f, coordinates);
+// Big-Batch SGD with backtracking line search.
+BBS_Armijo optimizer2(batchSize, 0.01, 0.1, 8000, 1e-4);
+optimizer2.Optimize(f, coordinates);
 ```
 
 #### See also:
@@ -433,10 +435,12 @@ estimate the objective function.
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-CMAES<> optimizer(0, -1, 1, 32, 200, 0.1e-4); // CMAES with the FullSelection policy.
+// CMAES with the FullSelection policy.
+CMAES<> optimizer(0, -1, 1, 32, 200, 0.1e-4);
 optimizer.Optimize(f, coordinates);
 
-ApproxCMAES<>  approxOptimizer(batchSize, 0.01, 0.1, 8000, 1e-4); // CMAES with the RandomSelection policy.
+// CMAES with the RandomSelection policy.
+ApproxCMAES<> approxOptimizer(batchSize, 0.01, 0.1, 8000, 1e-4);
 approxOptimizer.Optimize(f, coordinates);
 ```
 
@@ -758,10 +762,12 @@ Attributes of the optimizer may also be changed via the member methods
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-Katyusha optimizer(1.0, 10.0, 1, 100, 0, 1e-10, true); // Without proximal update.
+// Without proximal update.
+Katyusha optimizer(1.0, 10.0, 1, 100, 0, 1e-10, true);
 optimizer.Optimize(f, coordinates);
 
-KatyushaProximal proximalOptimizer(1.0, 10.0, 1, 100, 0, 1e-10, true);  // With proximal update.
+// With proximal update.
+KatyushaProximal proximalOptimizer(1.0, 10.0, 1, 100, 0, 1e-10, true);
 proximalOptimizer.Optimize(f, coordinates);
 ```
 
@@ -1059,7 +1065,8 @@ Note that the `NesterovMomentumUpdate` class has the constructor
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-NesterovMomentumSGD optimizer(0.01, 32, 100000, 1e-5, true, MomentumUpdate(0.5));
+NesterovMomentumSGD optimizer(0.01, 32, 100000, 1e-5, true,
+    MomentumUpdate(0.5));
 optimizer.Optimize(f, coordinates);
 ```
 
@@ -1286,8 +1293,9 @@ Attributes of the optimizer may also be changed via the member methods
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-SA<> optimizer(ExponentialSchedule(), 1000000, 1000., 1000, 100, 1e-10, 3, 1.5, 0.5, 0.3
-optimizer.Optimize(f, coordinates); 
+SA<> optimizer(ExponentialSchedule(), 1000000, 1000., 1000, 100, 1e-10, 3, 1.5,
+    0.5, 0.3);
+optimizer.Optimize(f, coordinates);
 ```
 
 #### See also:
@@ -1346,10 +1354,12 @@ the `UpdatePolicyType`.
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-SARAH optimizer(0.01, 1, 5000, 0, 1e-5, true);  // Standard stochastic variance reduced gradient.
+// Standard stochastic variance reduced gradient.
+SARAH optimizer(0.01, 1, 5000, 0, 1e-5, true);
 optimizer.Optimize(f, coordinates);
 
-SARAH_Plus optimizerPlus(0.01, 1, 5000, 0, 1e-5, true);  // Stochastic variance reduced gradient with Barzilai-Borwein.
+// Stochastic variance reduced gradient with Barzilai-Borwein.
+SARAH_Plus optimizerPlus(0.01, 1, 5000, 0, 1e-5, true);
 optimizerPlus.Optimize(f, coordinates);
 ```
 
@@ -1702,10 +1712,13 @@ _`DecayPolicyType`_ classes.
 RosenbrockFunction f;
 arma::mat coordinates = f.GetInitialPoint();
 
-SVRG optimizer(0.005, 1, 300, 0, 1e-10, true); // Standard stochastic variance reduced gradient.
+// Standard stochastic variance reduced gradient.
+SVRG optimizer(0.005, 1, 300, 0, 1e-10, true);
 optimizer.Optimize(f, coordinates);
 
-SVRG_BB bbOptimizer(0.005, batchSize, 300, 0, 1e-10, true, SVRGUpdate(), BarzilaiBorweinDecay(0.1)); // Stochastic variance reduced gradient with Barzilai-Borwein.
+// Stochastic variance reduced gradient with Barzilai-Borwein.
+SVRG_BB bbOptimizer(0.005, batchSize, 300, 0, 1e-10, true, SVRGUpdate(),
+    BarzilaiBorweinDecay(0.1));
 bbOptimizer.Optimize(f, coordinates);
 ```
 

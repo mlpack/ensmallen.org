@@ -5,6 +5,10 @@
   border:1px solid black;
 }
 
+body {
+  max-width: 1600px;
+}
+
 ul, ol {
   margin-left: 30px;
 }
@@ -62,8 +66,7 @@ p {
 table {
   padding-left: 30px;
   padding-bottom: 30px;
-  table-layout: fixed;
-  width: calc(100% - 30px);
+  max-width: calc(100% - 30px);
 }
 
 table th {
@@ -84,11 +87,6 @@ table tr:nth-child(even), table tr:nth-child(even) td, table tr:nth-child(even) 
 
 table tr:nth-child(odd), table tr:nth-child(odd) td, table tr:nth-child(even) th {
   background: #dddddd;
-}
-
-table td strong code.highlighter-rouge
-{
-  color: #bb0000;
 }
 
 a
@@ -193,4 +191,10 @@ div.MathJax_Display {
 
 #nav-links a.active {
   border-bottom: 5px solid #bb0000;
+}
+
+@media (min-width: 940px) {
+#nav.menu-open {
+  display: none;
+}
 }

@@ -7,9 +7,9 @@ order: 3
 **ensmallen** was developed by the following people:
 
 
- * [Ryan Curtin](ratml.org)
+ * [Ryan Curtin](http://ratml.org)
  * Dongryeol Lee
- * [Marcus Edel](kurg.org)
+ * [Marcus Edel](http://kurg.org)
  * Sumedh Ghaisas
  * Siddharth Agrawal
  * Stephen Tu
@@ -30,4 +30,4 @@ order: 3
  * Trironk Kiatkungwanglai
  * Vasanth Kalingeri
  * Zhihao Lou
- * [Conrad Sanderson](conradsanderson.id.au)
+ * [Conrad Sanderson](http://conradsanderson.id.au)

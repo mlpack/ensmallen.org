@@ -342,12 +342,10 @@ objective function, described in [differentiable functions](#example-linear-regr
 Given some dataset `data` and responses `responses`, the linear regression
 objective function is separable as
 
-```
-f_i(x) = (responses(i) - x' * data(i))^2
-```
+$$ f_i(x) = (\operatorname{responses}(i) - x' * \operatorname{data}(i))^2 $$
 
-where `data(i)` represents the data point indexed by `i` and `responses(i)`
-represents the observed response indexed by `i`.
+where $\operatorname{data}(i)$ represents the data point indexed by $i$ and
+$\operatorname{responses}(i)$ represents the observed response indexed by $i$.
 
 ```c++
 #include <ensmallen>
@@ -518,10 +516,10 @@ The following optimizers can be used with differentiable functions:
  - [NadaMax](#nadamax)
  - [NesterovMomentumSGD](#nesterov-momentum-sgd)
  - [OptimisticAdam](#optimisticadam)
- - [RMSProp](#rmsprop) (`ens::RMSProp<>`)
+ - [RMSProp](#rmsprop)
  - [SARAH/SARAH+](#stochastic-recursive-gradient-algorithm-sarahsarah)
  - [SGD](#standard-sgd)
- - [Stochastic Gradient Descent with Restarts (SGDR)][#stochastic-gradient-descent-with-restarts-sgdr)
+ - [Stochastic Gradient Descent with Restarts (SGDR)](#stochastic-gradient-descent-with-restarts-sgdr)
  - [Snapshot SGDR](#snapshot-stochastic-gradient-descent-with-restarts)
  - [SMORMS3](#smorms3)
  - [SVRG](#standard-stochastic-variance-reduced-gradient-svrg)
@@ -529,7 +527,7 @@ The following optimizers can be used with differentiable functions:
 
 The example program below demonstrates the implementation and use of an
 arbitrary separable function.  The function used is the linear regression
-objective function, described in [differentiable functions](#example-linear-regression)
+objective function, described in [differentiable functions](#example-linear-regression).
 Given some dataset `data` and responses `responses`, the linear regression
 objective function is separable as
 
