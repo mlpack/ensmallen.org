@@ -1,19 +1,32 @@
 ---
-layout: default
-title: ensmallen | Generic and extensible C++ math optimization library
-description: This page describes ensmallen.
+layout: default-nav
+title: Home
+description: ensmallen | flexible C++ library for efficient mathematical optimization
+order: 1
 ---
-## About
-ensmallen is a C++ header-only library for mathematical optimization.
+ensmallen provides a simple set of abstractions for writing an objective
+function to optimize. It also provides a large set of standard and cutting-edge
+optimizers that can be used for virtually any mathematical optimization task.
+These include full-batch gradient descent techniques, small-batch techniques,
+gradient-free optimizers, and constrained optimization.
 
-The library provides a simple set of abstractions for writing an 
-objective function to optimize, and also a large set of standard and 
-cutting-edge optimizers that can be used for virtually any mathematical 
-optimization task. These include full-batch gradient descent techniques, 
-small-batch techniques, gradient-free optimizers, and constrained optimization.
+**requirements**
 
-## Jump to
-<a href="{{ "docs" | prepend:site.baseurl }}" class="link-special">Documentation</a>
-<a href="{{ "download" | prepend:site.baseurl }}" class="link-special">Download</a>
-<a href="https://github.com/mlpack/ensmallen" class="link-special">GitHub repo</a>
+ * recent C++ compiler with C++11 support
+ * [Armadillo](http://arma.sourceforge.net) version 6.500 or later
+ * OpenBLAS or Intel MKL or LAPACK (see Armadillo site for details)
 
+**license**
+
+  ensmallen is open source software, licensed under the permissive 3-clause BSD
+license.
+
+**download**
+
+  [ensmallen-1.10.0.tar.gz](files/ensmallen-1.10.0.tar.gz)
+
+**see also**
+
+ * [documentation](docs.html)
+ * [list of developers](developers.html)
+ * [bug reports](questions.html)
