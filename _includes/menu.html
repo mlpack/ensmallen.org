@@ -5,9 +5,17 @@
     {% for node in sorted_pages %}
       {% if node.layout == "default-nav" %}
         {% if node.url == page.url %}
-        <a href="{% if site.baseurl == "/" %}{{ node.url }}{% else %}{{ node.url | prepend: site.baseurl }}{% endif %}.html" class="active" title="{{ node.title }}">{{ node.title }}</a>
+          {% if node.title == "Home" %}
+          <a href="{% if site.baseurl == "/" %}{{ node.url }}{% else %}{{ node.url | prepend: site.baseurl }}{% endif %}" class="active" title="{{ node.title }}">{{ node.title }}</a>
+          {% else %}
+          <a href="{% if site.baseurl == "/" %}{{ node.url }}{% else %}{{ node.url | prepend: site.baseurl }}{% endif %}.html" class="active" title="{{ node.title }}">{{ node.title }}</a>
+          {% endif %}
         {% else %}
-        <a href="{% if site.baseurl == "/" %}{{ node.url }}{% else %}{{ node.url | prepend: site.baseurl }}{% endif %}.html" title="{{ node.title }}">{{ node.title }}</a>
+          {% if node.title == "Home" %}
+          <a href="{% if site.baseurl == "/" %}{{ node.url }}{% else %}{{ node.url | prepend: site.baseurl }}{% endif %}" title="{{ node.title }}">{{ node.title }}</a>
+          {% else %}
+          <a href="{% if site.baseurl == "/" %}{{ node.url }}{% else %}{{ node.url | prepend: site.baseurl }}{% endif %}.html" title="{{ node.title }}">{{ node.title }}</a>
+          {% endif %}
         {% endif %}
       {% endif %}
     {% endfor %}
