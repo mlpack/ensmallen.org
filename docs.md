@@ -22,7 +22,7 @@ for many different types of $f(x)$.  The documentation is split into three parts
  * [Optimizer documentation](#optimizer-documentation): how to use each of
    ensmallen's optimizers to find $\operatorname{argmin} f(x)$
 
- * [History/changelog](#history-changelog): changes for each version of
+ * [History/changelog](#historychangelog): changes for each version of
    ensmallen
 
 Everything in ensmallen is in the `ens` namespace so it is often useful to put a
