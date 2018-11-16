@@ -23,7 +23,8 @@ mv $ensmallen_dir/HISTORY.md history.md;
 
 mkdir tmp_site;
 mkdir old_site;
-jekyll b -d tmp_site/ -b . \
+jekyll clean \
+    && jekyll b -d tmp_site/ -b . \
     && mv "$1/*" old_site/ \
     && mv tmp_site/* "$1/" \
     && rm -rf tmp_site old_site;
