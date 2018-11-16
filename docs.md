@@ -14,13 +14,16 @@ solving the problem
 
 $$\operatorname{argmin} f(x)$$
 
-for many different types of $f(x)$.  The documentation is split into two parts:
+for many different types of $f(x)$.  The documentation is split into three parts:
 
  * [Function type documentation](#function-type-documentation): how to implement
    the different types of functions $f(x)$ that ensmallen can handle
 
  * [Optimizer documentation](#optimizer-documentation): how to use each of
    ensmallen's optimizers to find $\operatorname{argmin} f(x)$
+
+ * [History/changelog](#history-changelog): changes for each version of
+   ensmallen
 
 Everything in ensmallen is in the `ens` namespace so it is often useful to put a
 `using` directive in your code:
@@ -42,3 +45,7 @@ using namespace ens;
 # Optimizer documentation
 
 {% include_relative optimizers.md %}
+
+# History/changelog
+
+{% include_relative history.md %}
