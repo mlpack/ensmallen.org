@@ -21,7 +21,8 @@ mv $ensmallen_dir/doc/optimizers.md optimizers.md;
 mv $ensmallen_dir/doc/function_types.md function_types.md;
 mv $ensmallen_dir/HISTORY.md history.md;
 
-sed -i 's|\[ensmallen-[0-9]*\.[0-9]*\.[0-9]*.tar.gz\](files/ensmallen-[0-9]*\.[0-9]*\.[0-9]*\.tar\.gz)|['$ensmallen_newest'](files/'$ensmallen_newest')|' index.md
+ensmallen_file=`basename "$ensmallen_newest"`;
+sed -i 's|\[ensmallen-[0-9]*\.[0-9]*\.[0-9]*.tar.gz\](files/ensmallen-[0-9]*\.[0-9]*\.[0-9]*\.tar\.gz)|['$ensmallen_file'](files/'$ensmallen_file')|' index.md
 
 mkdir tmp_site;
 mkdir old_site;
