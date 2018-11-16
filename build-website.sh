@@ -21,10 +21,12 @@ mv $ensmallen_dir/doc/optimizers.md optimizers.md;
 mv $ensmallen_dir/doc/function_types.md function_types.md;
 mv $ensmallen_dir/HISTORY.md history.md;
 
+sed -i 's|\[ensmallen-[0-9]*\.[0-9]*\.[0-9]*.tar.gz\](files/ensmallen-[0-9]*\.[0-9]*\.[0-9]*\.tar\.gz)|['$ensmallen_newest'](files/'$ensmallen_newest')|' index.md
+
 mkdir tmp_site;
 mkdir old_site;
 jekyll clean \
     && jekyll b -d tmp_site/ -b . \
-    && mv "$1/*" old_site/ \
+    && mv "$1/"* old_site/ \
     && mv tmp_site/* "$1/" \
     && rm -rf tmp_site old_site;
