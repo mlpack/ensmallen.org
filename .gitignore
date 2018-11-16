@@ -28,3 +28,8 @@ _site/
 /.bundle/
 /vendor/bundle
 /lib/bundler/man/
+
+# These are pulled out of ensmallen by build-website.sh:
+history.md
+optimizers.md
+function_types.md
