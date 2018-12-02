@@ -25,6 +25,12 @@ license.
 
   [ensmallen-1.11.1.tar.gz](files/ensmallen-1.11.1.tar.gz)
 
+**citation**
+
+  * S. Bhardwaj, R. Curtin, M. Edel, Y. Mentekidis, C. Sanderson.  
+    [ensmallen: a flexible C++ library for efficient function optimization](http://conradsanderson.id.au/pdfs/ensmallen_optimization_lib_2018.pdf).  
+    Workshop on Systems for ML and Open Source Software at NIPS 2018.
+
 **see also**
 
  * [documentation](docs.html)

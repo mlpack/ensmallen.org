@@ -11,8 +11,13 @@ order: 4
 
  * **How do I cite ensmallen in my work?**
 
-   [under construction]
+   Please cite the following paper if you use ensmallen in your research and/or software.  
+   Citations are useful for the continued development and maintenance of the library.
 
+   * S. Bhardwaj, R. Curtin, M. Edel, Y. Mentekidis, C. Sanderson.  
+     [ensmallen: a flexible C++ library for efficient function optimization](http://conradsanderson.id.au/pdfs/ensmallen_optimization_lib_2018.pdf).  
+     Workshop on Systems for ML and Open Source Software at NIPS 2018.
+ 
  * **What is the distribution license for ensmallen?**
 
    ensmallen is open source software, licensed under the permissive [3-clause BSD](http://opensource.org/licenses/BSD-3-Clause)
