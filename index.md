@@ -23,7 +23,7 @@ license.
 
 **download**
 
-  [ensmallen-1.10.0.tar.gz](files/ensmallen-1.10.0.tar.gz)
+  [ensmallen-1.11.1.tar.gz](files/ensmallen-1.11.1.tar.gz)
 
 **see also**
 
