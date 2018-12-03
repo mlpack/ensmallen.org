@@ -11,7 +11,7 @@ if [ "$#" -ne 1 ]; then
   exit 1;
 fi
 
-ensmallen_newest=`ls files/ensmallen-*.tar.gz | sort | tail -1`;
+ensmallen_newest=`ls files/ensmallen-*.tar.gz | grep -v 'ensmallen-latest.tar.gz' | sort | tail -1`;
 ensmallen_dir=`basename "$ensmallen_newest" .tar.gz`;
 tar -xf "$ensmallen_newest" $ensmallen_dir/doc/optimizers.md;
 tar -xf "$ensmallen_newest" $ensmallen_dir/doc/function_types.md;
