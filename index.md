@@ -27,8 +27,8 @@ license.
 
 **citation**
 
-  * S. Bhardwaj, R. Curtin, M. Edel, Y. Mentekidis, C. Sanderson.
-    [ensmallen: a flexible C++ library for efficient function optimization](files/ensmallen_2018.pdf).
+  * S. Bhardwaj, R. Curtin, M. Edel, Y. Mentekidis, C. Sanderson.  
+    [ensmallen: a flexible C++ library for efficient function optimization](files/ensmallen_2018.pdf).  
     Workshop on Systems for ML and Open Source Software at NIPS 2018.
 
 **see also**
