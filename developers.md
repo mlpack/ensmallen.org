@@ -31,3 +31,4 @@ order: 3
  * Vasanth Kalingeri
  * Zhihao Lou
  * [Conrad Sanderson](http://conradsanderson.id.au)
+ * Dan Timson
