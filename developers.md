@@ -32,3 +32,4 @@ order: 3
  * Zhihao Lou
  * [Conrad Sanderson](http://conradsanderson.id.au)
  * Dan Timson
+ * Lukas Mackinder
