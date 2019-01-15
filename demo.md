@@ -3,6 +3,6 @@ layout: default-nav
 title: Demo
 description: ensmallen | flexible C++ library for efficient mathematical optimization
 order: 5
-edirect_to:
+redirect_to:
   - https://vis.ensmallen.org
 ---
