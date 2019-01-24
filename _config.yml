@@ -29,6 +29,7 @@ defaults:
 gems:
   - jekyll-paginate
   - jekyll-sitemap
+  - jekyll-redirect-from
 
 # Custom variables
 version: "1.0.0"
