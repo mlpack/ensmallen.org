@@ -23,7 +23,8 @@ license.
 
 **download**
 
-  [ensmallen-1.11.1.tar.gz](files/ensmallen-1.11.1.tar.gz)
+ - [ensmallen-1.11.1.tar.gz](files/ensmallen-1.11.1.tar.gz)
+ - _vcpkg_: `vcpkg install ensmallen:x64-windows`
 
 **citation**
 
