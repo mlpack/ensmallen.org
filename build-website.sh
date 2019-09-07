@@ -19,6 +19,7 @@ tar -xf "$ensmallen_newest" $ensmallen_dir/HISTORY.md;
 
 mv $ensmallen_dir/doc/optimizers.md optimizers.md;
 mv $ensmallen_dir/doc/function_types.md function_types.md;
+mv $ensmallen_dir/doc/callbacks.md callbacks.md;
 mv $ensmallen_dir/HISTORY.md history.md;
 
 ensmallen_file=`basename "$ensmallen_newest"`;
