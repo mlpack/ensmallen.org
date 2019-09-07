@@ -22,6 +22,10 @@ for many different types of $f(x)$.  The documentation is split into three parts
  * [Optimizer documentation](#optimizer-documentation): how to use each of
    ensmallen's optimizers to find $\operatorname{argmin} f(x)$
 
+ * [Callback documentation](#callback-documentation): documentation for
+   ensmallen callbacks, which can be used to specify custom behavior during
+   optimization
+
  * [History/changelog](#historychangelog): changes for each version of
    ensmallen
 
@@ -55,6 +59,10 @@ Citations are useful for the continued development and maintenance of the librar
 # Optimizer documentation
 
 {% include_relative optimizers.md %}
+
+# Callback documentation
+
+{% include_relative callbacks.md %}
 
 # History/changelog
 
