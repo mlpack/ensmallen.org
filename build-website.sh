@@ -15,6 +15,7 @@ ensmallen_newest=`ls files/ensmallen-*.tar.gz | grep -v 'ensmallen-latest.tar.gz
 ensmallen_dir=`basename "$ensmallen_newest" .tar.gz`;
 tar -xf "$ensmallen_newest" $ensmallen_dir/doc/optimizers.md;
 tar -xf "$ensmallen_newest" $ensmallen_dir/doc/function_types.md;
+tar -xf "$ensmallen_newest" $ensmallen_dir/doc/callbacks.md;
 tar -xf "$ensmallen_newest" $ensmallen_dir/HISTORY.md;
 
 mv $ensmallen_dir/doc/optimizers.md optimizers.md;
