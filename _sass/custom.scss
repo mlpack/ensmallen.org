@@ -41,6 +41,10 @@ h3 {
 h6 {
   font-style: italic;
   font-weight: normal;
+  line-height: 1em;
+  padding-top: 0em;
+  margin-top: 0em;
+  padding-bottom: 1em;
 }
 
 div.highlight {
@@ -207,9 +211,4 @@ div.MathJax_Display {
 #nav.menu-open {
   display: none;
 }
-}
-
-h1#historychangelog h3 {
-  border-top: none;
-  float: left;
 }
