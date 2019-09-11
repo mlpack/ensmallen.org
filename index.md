@@ -13,7 +13,7 @@ gradient-free optimizers, and constrained optimization.
 **requirements**
 
  * recent C++ compiler with C++11 support
- * [Armadillo](http://arma.sourceforge.net) version 6.500 or later
+ * [Armadillo](http://arma.sourceforge.net) version 8.400 or later
  * OpenBLAS or Intel MKL or LAPACK (see Armadillo site for details)
 
 **license**
