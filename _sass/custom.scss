@@ -212,3 +212,23 @@ div.MathJax_Display {
   display: none;
 }
 }
+
+details
+{
+  margin-bottom: 1em;
+}
+
+summary
+{
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 30px;
+  margin-left: 30px;
+  background: #ccc;
+}
+
+summary p
+{
+  display: inline;
+  font-style: italic;
+}
