@@ -1,7 +1,7 @@
 ---
 layout: default-nav
 title: Documentation
-description: ensmallen | flexible C++ library for efficient mathematical optimization
+description: ensmallen | flexible C++ library for efficient numerical optimization
 mathjax: true
 order: 2
 ---

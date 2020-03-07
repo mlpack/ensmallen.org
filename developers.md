@@ -1,7 +1,7 @@
 ---
 layout: default-nav
 title: Developers
-description: ensmallen | flexible C++ library for efficient mathematical optimization
+description: ensmallen | flexible C++ library for efficient numerical optimization
 order: 3
 ---
 **ensmallen** was developed by the following people:
