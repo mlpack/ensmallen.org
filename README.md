@@ -1,5 +1,8 @@
 ## About
-Jekyll generated static website for ensmallen.
+
+Jekyll generated static website for ensmallen. (Deployed at
+https://ensmallen.org.)
 
 ## License
-Released under [MIT License](license.md).
+
+Released under the [MIT License](license.md).
