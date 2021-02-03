@@ -29,6 +29,9 @@ for many different types of $f(x)$.  The documentation is split into four parts:
  * [History/changelog](#historychangelog): changes for each version of
    ensmallen
 
+ * [Example program](https://github.com/mlpack/ensmallen/blob/master/example.cpp):
+   simple example program demonstrating ensmallen usage
+
 Everything in ensmallen is in the `ens` namespace so it is often useful to put a
 `using` directive in your code:
 
@@ -39,13 +42,13 @@ using namespace ens;
 # Citation
 {:.no_toc}
 
-Please cite the following paper if you use ensmallen in your research and/or software.  
+Please cite the following paper if you use ensmallen in your research and/or software.
 Citations are useful for the continued development and maintenance of the library.
 
-* S. Bhardwaj, R. Curtin, M. Edel, Y. Mentekidis, C. Sanderson.  
-  [ensmallen: a flexible C++ library for efficient function optimization](files/ensmallen_2018.pdf).  
+* S. Bhardwaj, R. Curtin, M. Edel, Y. Mentekidis, C. Sanderson.
+  [ensmallen: a flexible C++ library for efficient function optimization](files/ensmallen_2018.pdf).
   Workshop on Systems for ML and Open Source Software at NIPS 2018.
-   
+
 # Contents
 {:.no_toc}
 
