@@ -45,9 +45,16 @@ using namespace ens;
 Please cite the following paper if you use ensmallen in your research and/or software.
 Citations are useful for the continued development and maintenance of the library.
 
-* S. Bhardwaj, R. Curtin, M. Edel, Y. Mentekidis, C. Sanderson.
+* S. Bhardwaj, R.R. Curtin, M. Edel, Y. Mentekidis, C. Sanderson.
   [ensmallen: a flexible C++ library for efficient function optimization](files/ensmallen_2018.pdf).
-  Workshop on Systems for ML and Open Source Software at NIPS 2018.
+  Workshop on Systems for ML and Open Source Software at NIPS 2018. ([bibtex](files/ensmallen_2018.bib))
+
+See also the following paper detailing the internal design of ensmallen:
+
+* R.R. Curtin, M. Edel, R. Prabhu, S. Basak, Z. Lou, C. Sanderson.
+  [Flexible numerical optimization with ensmallen](files/ensmallen_tr.pdf).
+  arXiv preprint [2003.01403](https://arxiv.org/abs/2003.04103).
+  ([bibtex](files/ensmallen_tr.bib))
 
 # Contents
 {:.no_toc}
