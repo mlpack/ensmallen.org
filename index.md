@@ -23,7 +23,7 @@ license.
 
 **download**
 
- - [ensmallen-2.16.2.tar.gz](files/ensmallen-2.16.2.tar.gz)
+ - [ensmallen-...tar.gz](files/ensmallen-...tar.gz)
  - _vcpkg_: `vcpkg install ensmallen:x64-windows`
 
 **citation**
