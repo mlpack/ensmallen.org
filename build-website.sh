@@ -28,7 +28,6 @@ sed -i 's|\[ensmallen-[0-9]*\.[0-9]*\.[0-9]*.tar.gz\](files/ensmallen-[0-9]*\.[0
 
 mkdir tmp_site;
 mkdir old_site;
-bundle install --path vendor/bundle
 bundle exec jekyll clean \
     && bundle exec jekyll b -d tmp_site/ -b . \
     && mv "$1/"* old_site/ \
