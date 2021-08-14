@@ -14,9 +14,9 @@ order: 4
    Please cite the following paper if you use ensmallen in your research and/or software.  
    Citations are useful for the continued development and maintenance of the library.
 
-   * S. Bhardwaj, R. Curtin, M. Edel, Y. Mentekidis, C. Sanderson.  
-     [ensmallen: a flexible C++ library for efficient function optimization](files/ensmallen_2018.pdf).  
-     Workshop on Systems for ML and Open Source Software at NIPS 2018.
+   * Ryan R. Curtin, Marcus Edel, Rahul Ganesh Prabhu, Suryoday Basak, Zhihao Lou, Conrad Sanderson.  
+     [The ensmallen library for flexible numerical optimization](https://jmlr.org/papers/volume22/20-416/20-416.pdf).  
+     Journal of Machine Learning Research, Vol. 22, No. 166, 2021.
  
  * **What is the distribution license for ensmallen?**
 
