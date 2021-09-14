@@ -11,7 +11,7 @@ order: 1
 **requirements**
 
  * recent C++ compiler with C++11 support
- * [Armadillo](http://arma.sourceforge.net)
+ * [Armadillo](http://arma.sourceforge.net) (>= 9.800)
  * OpenBLAS or Intel MKL or LAPACK (see Armadillo site for details)
 
 **license**
