@@ -4,16 +4,14 @@ title: Home
 description: ensmallen | flexible C++ library for efficient numerical optimization
 order: 1
 ---
-ensmallen provides a simple set of abstractions for writing an objective
-function to optimize. It also provides a large set of standard and cutting-edge
-optimizers that can be used for virtually any numerical optimization task.
-These include full-batch gradient descent techniques, small-batch techniques,
-gradient-free optimizers, and constrained optimization.
+* **ensmallen** is a high-quality C++ library for non-linear numerical optimization
+* provides many types of optimizers that can be used for virtually any numerical optimization task
+* allows optional callbacks to customize the optimization process
 
 **requirements**
 
  * recent C++ compiler with C++11 support
- * [Armadillo](http://arma.sourceforge.net) version 8.400 or later
+ * [Armadillo](http://arma.sourceforge.net) (>= 9.800)
  * OpenBLAS or Intel MKL or LAPACK (see Armadillo site for details)
 
 **license**
