@@ -16,7 +16,7 @@ order: 1
 
 **license**
 
-  ensmallen is open source software, licensed under the permissive 3-clause BSD
+  * ensmallen is open source software, licensed under the permissive 3-clause BSD
 license.
 
 **download**
