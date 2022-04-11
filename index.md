@@ -26,8 +26,8 @@ license.
 
 **citation**
 
-  * Ryan R. Curtin, Marcus Edel, Rahul Ganesh Prabhu, Suryoday Basak, Zhihao Lou, Conrad Sanderson.
-    [The ensmallen library for flexible numerical optimization](https://jmlr.org/papers/volume22/20-416/20-416.pdf).
+  * Ryan R. Curtin, Marcus Edel, Rahul Ganesh Prabhu, Suryoday Basak, Zhihao Lou, Conrad Sanderson.  
+    [The ensmallen library for flexible numerical optimization](https://jmlr.org/papers/volume22/20-416/20-416.pdf).  
     Journal of Machine Learning Research, Vol. 22, No. 166, 2021.
 
 **see also**
