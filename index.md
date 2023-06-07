@@ -6,6 +6,7 @@ order: 1
 ---
 * **ensmallen** is a high-quality C++ library for non-linear numerical optimization
 * provides many types of optimizers that can be used for virtually any numerical optimization task
+* examples of included optimizers: L-BFGS, SGD, CMAES and Simulated Annealing
 * allows optional callbacks to customize the optimization process
 
 **requirements**
