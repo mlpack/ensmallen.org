@@ -25,6 +25,9 @@ license.
  - [ensmallen-2.20.0.tar.gz](files/ensmallen-2.20.0.tar.gz)
  - _vcpkg_: `vcpkg install ensmallen:x64-windows`
 
+**example optimization**
+ * see [example.cpp](files/example.cpp) for example usage of the L-BFGS optimizer in a linear regression setting
+
 **citation**
 
   * Ryan R. Curtin, Marcus Edel, Rahul Ganesh Prabhu, Suryoday Basak, Zhihao Lou, Conrad Sanderson.  
